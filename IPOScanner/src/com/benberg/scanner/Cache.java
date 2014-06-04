@@ -4,10 +4,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.benberg.struct.NasdaqIpoTickers;
+
 public class Cache {
 	
 	 private static Cache instance = null;
 	 private Map<Integer,List<String>> _ListOfAllTickers;
+	 private List<NasdaqIpoTickers> _ListOfUpcomingTickers;
 	 private String Test="";
 	 
 	   protected Cache() {
@@ -40,6 +43,14 @@ public class Cache {
 	   {
 		   return instance.Test;
 	   }
+	   public void SetUpcomingTickers(List<NasdaqIpoTickers> Tickers)
+	   {
+	   this._ListOfUpcomingTickers = Tickers;
+	   }
 	   
+	   public List<NasdaqIpoTickers> getUpcomingTickers()
+	   {
+		return this._ListOfUpcomingTickers;   
+	   }
 	   
 }

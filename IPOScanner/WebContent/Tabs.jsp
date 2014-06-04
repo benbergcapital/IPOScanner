@@ -26,6 +26,8 @@
 	}
      
   %>
+  <li class><a href="#viewupcoming">UpcomingIpos</a></li>
+  
    </ul>
         <div class="tabcontents">
         
@@ -40,7 +42,14 @@
          }
            
         %>
+     <div id="viewupcoming">
+       <%
+       out.println(com.benberg.scanner.main.getUpcomingCharts);
      
+ 	    %>
+     
+     
+     </div>
     </div>
 </body>
 </html>

@@ -53,6 +53,11 @@ public class PreCache extends HttpServlet{
 		 c=Cache.getInstance();
 		 c.setTickerList(_ListOfAllTickers);	
 		
+		 
+		 //Get Upcoming Prices
+		 c.SetUpcomingTickers(N.getListOfUpcomingTickers());
+		
+		 
 		
 	  }
 	  

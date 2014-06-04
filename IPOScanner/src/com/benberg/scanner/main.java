@@ -26,6 +26,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import com.benberg.struct.NasdaqIpoTickers;
 
 @WebServlet("/RecentIPOs")
 public class main extends HttpServlet{
@@ -78,6 +79,21 @@ public class main extends HttpServlet{
 	
 	      }
 	
+	public static String getUpcoming()
+	{
+		Cache c = new Cache();
+		c=Cache.getInstance();
+		String response="";
+		for(NasdaqIpoTickers N : c.getUpcomingTickers())
+		{
+
+		
+		
+		}
+		return null;
+	}
+	
+	
 	public static String getCharts(int Month)
 	{ 
 		List<String> _ListOfTickers = new ArrayList<String>();
@@ -89,7 +105,7 @@ public class main extends HttpServlet{
 		{
 			for(String s : _ListOfTickers)
 	        {
-				 charts += "<img src=\"http://stockcharts.com/c-sc/sc?s="+s+"&p=D&b=5&g=0&i=p87601148800&r=1401642134677\"><br>";
+				 charts += "<img src=\"http://stockcharts.com/c-sc/sc?s="+s+"&p=D&b=5&g=0&i=p87601148800&r=1401642134677\" width=\"553\" height=\"419\"><br>";
 	        }
 		}
 		
