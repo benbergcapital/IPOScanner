@@ -35,6 +35,21 @@
     <script src="js/docs.js"></script>
     <script src="js/github.info.js"></script>
 
+<script type="text/javascript">
+
+jQuery(document).ready(function($) {
+    $(".clickableRow").click(function() {
+          window.document.location = $(this).attr("href");
+    });
+});
+
+
+</script>
+
+
+
+
+
     <title>Metro UI CSS : Metro Bootstrap CSS Library</title>
 </head>
 <body>
