@@ -23,7 +23,7 @@
 
          You can define any number of context initialization
          parameters, including zero.
-     -->
+    --> 
  <servlet>
     <servlet-name>PreCache</servlet-name>
     <servlet-class>com.benberg.scanner.PreCache</servlet-class>

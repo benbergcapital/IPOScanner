@@ -27,10 +27,7 @@ public class PreCache extends HttpServlet{
 	  
 	public void init() throws ServletException
     {
-	//  Watchlist w = new Watchlist();
-	  
-	//  w.GetWatchlist();
-	  
+	 
 		  System.out.println("Running startup cache");
 		  NasdaqIPOWorker N = new NasdaqIPOWorker();
 		  
@@ -57,7 +54,8 @@ public class PreCache extends HttpServlet{
 		 //Get Upcoming Prices
 		 c.SetUpcomingTickers(N.getListOfUpcomingTickers());
 		
-		 
+		 //Connect to DB
+		 c.ConnectToDatabase();
 		
 	  }
 	  

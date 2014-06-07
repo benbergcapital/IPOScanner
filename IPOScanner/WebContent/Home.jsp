@@ -1,18 +1,48 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Insert title here</title>
-</head>
-<body>
-Tesst
+<!DOCTYPE html>
+<Html>
+<Head>
+    <link href="/metro-bootstrap.css" rel="stylesheet">
 
-<form action="${pageContext.request.contextPath}/RecentIPOs"
-		method="post">
-		<input type="submit" name="btn" id="runEmailListener" value="RUN_EMAIL_LISTENER" />
-	</form>
 
-</body>
-</html>
+</Head>
+<Body>
+
+
+<nav class="sidebar (light)">
+    <ul>
+        <li class="title">Items Group 1</li>
+        <li class="active"><a href="#"><i class="icon-home"></i>Dashboard</a></li>
+        <li class="stick bg-red"><a href="#"><i class="icon-cog"></i>Layouts</a></li>
+        <li class="stick bg-yellow">
+            <a class="dropdown-toggle" href="#"><i class="icon-tree-view"></i>Sub menu</a>
+            <ul class="dropdown-menu" data-role="dropdown">
+                <li><a href="">Subitem 1</a></li>
+                <li><a href="">Subitem 2</a></li>
+                <li><a href="">Subitem 3</a></li>
+                <li class="divider"></li>
+                <li><a href="">Subitem 4</a></li>
+                <li class="disabled"><a href="">Subitem 4</a></li>
+            </ul>
+        </li>
+        <li class="stick bg-green"><a href="#">Thread item</a></li>
+        <li class="disabled"><a href="#">Disabled item</a></li>
+ 
+        <li class="title">Items Group 2</li>
+        <li><a href="#">Other Item 1</a></li>
+        <li><a href="#">Other item 2</a></li>
+        <li><a href="#">Other item 3</a></li>
+        <li>
+            <a class="dropdown-toggle" href="#">Sub menu 2</a>
+            <ul class="dropdown-menu" data-role="dropdown">
+                <li><a href="">Subitem 1</a></li>
+                <li><a href="">Subitem 2</a></li>
+                <li><a href="">Subitem 3</a></li>
+            </ul>
+        </li>
+    </ul>
+</nav>
+
+</Body>
+</Html>

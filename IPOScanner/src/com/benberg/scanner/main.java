@@ -27,6 +27,7 @@ import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import com.benberg.struct.NasdaqIpoTickers;
+import com.benberg.struct.WatchlistStruct;
 
 @WebServlet("/RecentIPOs")
 public class main extends HttpServlet{
@@ -86,11 +87,11 @@ public class main extends HttpServlet{
 		String response="";
 		for(NasdaqIpoTickers N : c.getUpcomingTickers())
 		{
-
+			response += N.GetTicker()+ " : "+N.GetName()+"<br>";
 		
 		
 		}
-		return null;
+		return response;
 	}
 	
 	
@@ -149,6 +150,26 @@ public class main extends HttpServlet{
 		}
 		
 		
+		
+	}
+	
+	public static String GetWatchlist()
+	{
+		Cache c = new Cache();
+		c=Cache.getInstance();
+		String result="";
+		for(WatchlistStruct s : c.getWatchlist())
+	       {
+			result += "<tr>"+
+				"<td>"+
+				s.GetTicker()+
+				"</td>"+
+				"<td>"+
+				s.GetNotes()+
+				"</td>"+
+				"</tr>";
+	       }
+		return result;
 		
 	}
 	

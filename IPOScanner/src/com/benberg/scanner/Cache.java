@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.benberg.struct.NasdaqIpoTickers;
+import com.benberg.struct.WatchlistStruct;
 
 public class Cache {
 	
@@ -12,7 +13,7 @@ public class Cache {
 	 private Map<Integer,List<String>> _ListOfAllTickers;
 	 private List<NasdaqIpoTickers> _ListOfUpcomingTickers;
 	 private String Test="";
-	 
+	 private Watchlist _watchlist;
 	   protected Cache() {
 		   _ListOfAllTickers = new HashMap<Integer,List<String>>();
 	   }
@@ -51,6 +52,14 @@ public class Cache {
 	   public List<NasdaqIpoTickers> getUpcomingTickers()
 	   {
 		return this._ListOfUpcomingTickers;   
+	   }
+	   public void ConnectToDatabase()
+	   {
+		   _watchlist = new Watchlist();
+	   }
+	   public List<WatchlistStruct> getWatchlist()
+	   {
+		  return _watchlist.GetWatchlist();
 	   }
 	   
 }

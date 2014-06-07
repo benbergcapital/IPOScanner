@@ -1,4 +1,4 @@
-﻿/* Tab Content - menucool.com */
+/* Tab Content - menucool.com */
 ul.tabs
 {
     padding: 7px 0;
@@ -47,7 +47,7 @@ ul.tabs li.selected a, ul.tabs li.selected a:hover
 {
     top: 0px;
     font-weight:normal;
-    background: #FFF;
+    background: #1ba1e2;
     border-bottom: 1px solid #FFF;
     color: #000;
 }

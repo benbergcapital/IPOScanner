@@ -13,5 +13,12 @@ public class NasdaqIpoTickers {
 		this.Name = Name;
 		
 	}
-
+	public String GetTicker()
+	{
+		return Ticker;
+	}
+	public String GetName()
+	{
+		return Name;
+	}
 }

@@ -44,7 +44,7 @@
         %>
      <div id="viewupcoming">
        <%
-       out.println(com.benberg.scanner.main.getUpcomingCharts);
+       out.println(com.benberg.scanner.main.getUpcoming());
      
  	    %>
      

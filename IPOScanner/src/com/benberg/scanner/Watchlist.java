@@ -6,6 +6,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
+
+import com.benberg.struct.WatchlistStruct;
 
 public class Watchlist {
 
@@ -14,26 +18,38 @@ public class Watchlist {
 	 Connection con = null;
 	 Statement st = null;
 
-
-	public String GetWatchlist()
-	{
-		try{
-
-		   String url = "jdbc:mysql://ben512.no-ip.org:3306/watchlist";
+	 public Watchlist()
+	 {
+		 try{
+		   String url = "jdbc:mysql://localhost:3306/benberg";
 		   String user = "root";
 		   String password = "root";
 		
 		   Class.forName("com.mysql.jdbc.Driver");
 		 con = DriverManager.getConnection(url, user, password);
+		 }
+		 catch (Exception e)
+		 {
+			 
+		 }
+		 
+	 }
+
+	public List<WatchlistStruct> GetWatchlist()
+	{
+		List<WatchlistStruct> result = new ArrayList<WatchlistStruct>();
+		try{
+
 		 PreparedStatement pst = null;
 		 pst = con.prepareStatement("SELECT * FROM WATCHLIST");
 		 rs = pst.executeQuery();
 		
 			while (rs.next())
 			{
-			System.out.println(rs.getString(1));
-			}
+				result.add(new WatchlistStruct(rs.getString(1),rs.getString(2)));
 		
+			}
+		return result;
 		
 		}
 		catch (Exception e)
