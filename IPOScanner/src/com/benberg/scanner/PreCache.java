@@ -34,7 +34,9 @@ public class PreCache extends HttpServlet{
 		 Calendar cal = Calendar.getInstance();
 	
 		 
-		 int month = cal.get(Calendar.MONTH);
+	//	 int month = cal.get(Calendar.MONTH);
+		int month = 2; //for debug quickness
+		 
 		 List<String> _Tickers = new ArrayList<String>();
 		 Map<Integer,List<String>> _ListOfAllTickers = new HashMap<Integer,List<String>>();
 		 for (int i=0;i<=month;i++)

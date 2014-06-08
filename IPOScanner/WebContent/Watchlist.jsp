@@ -36,19 +36,51 @@
     <script src="js/github.info.js"></script>
 
 <script type="text/javascript">
+document.querySelector('table').onclick = highlight;
 
-jQuery(document).ready(function($) {
-    $(".clickableRow").click(function() {
-          window.document.location = $(this).attr("href");
-    });
-});
+function Watchlist_click(Ticker)
+{
+	alert(Ticker);
+	
+}
 
+function highlight(e){
+      e = e || event;
+      var from = findrow(e.target || e.srcElement)
+         ,highlighted = /highlighted/i.test((from||{}).className);
+    if (from) {
+        var rows = from.parentNode.querySelectorAll('tr');
+        for (var i=0;i<rows.length;i+=1){
+            rows[i].className = '';
+        }
+        from.className = !highlighted ? 'highlighted' : '';
+    }
+}
+    
+function findrow(el){
+      if (/tr/i.test(el.tagName))
+        return el;
+      var elx;
+      while (elx = el.parentNode) {
+        if (/tr/i.test(elx.tagName)) {
+            return elx;
+        }
+      }
+      return null;
+}
 
 </script>
 
+<style>
+tr.highlighted td {
+ background: #FF3333;
+ color: #FFF000;
+}
+
+tr {cursor: pointer;}
 
 
-
+</style>
 
     <title>Metro UI CSS : Metro Bootstrap CSS Library</title>
 </head>

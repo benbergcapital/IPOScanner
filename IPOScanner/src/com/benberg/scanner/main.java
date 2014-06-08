@@ -160,7 +160,7 @@ public class main extends HttpServlet{
 		String result="";
 		for(WatchlistStruct s : c.getWatchlist())
 	       {
-			result += "<tr class='clickableRow' href='"+s.GetTicker()+"'>"+
+			result += "<tr onClick=\"Watchlist_click('"+s.GetTicker()+"')\">"+
 				"<td>"+
 				s.GetTicker()+
 				"</td>"+
