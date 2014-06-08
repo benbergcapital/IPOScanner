@@ -36,13 +36,13 @@ public class main extends HttpServlet{
 	                    HttpServletResponse response)
 	      throws ServletException, IOException {
 		 List<String> _ListOfTickers = new ArrayList<String>();
-		
+
 		Cache c = new Cache();
 		c=Cache.getInstance();
+
 		
-		System.out.println("printing"+ c.getTest());
-		
-		
+
+
 		String Month = request.getParameter("Month");
 		int month=0;
 		 if (Month == null)
@@ -53,12 +53,12 @@ public class main extends HttpServlet{
 		 else
 		 {
 			  month = Integer.valueOf(Month);
-			 
+
 		 }
-		 
-		
+
+
 		_ListOfTickers = c.getTickerList(month-1);
-			
+
 			String charts ="";
 			  for(String s : _ListOfTickers)
               {
@@ -77,9 +77,9 @@ public class main extends HttpServlet{
 				                charts+
 				                "</BODY></HTML>");
 
-	
+
 	      }
-	
+
 	public static String getUpcoming()
 	{
 		Cache c = new Cache();
@@ -88,13 +88,13 @@ public class main extends HttpServlet{
 		for(NasdaqIpoTickers N : c.getUpcomingTickers())
 		{
 			response += N.GetTicker()+ " : "+N.GetName()+"<br>";
-		
-		
+
+
 		}
 		return response;
 	}
-	
-	
+
+
 	public static String getCharts(int Month)
 	{ 
 		List<String> _ListOfTickers = new ArrayList<String>();
@@ -109,7 +109,7 @@ public class main extends HttpServlet{
 				 charts += "<img src=\"http://stockcharts.com/c-sc/sc?s="+s+"&p=D&b=5&g=0&i=p87601148800&r=1401642134677\" width=\"553\" height=\"419\"><br>";
 	        }
 		}
-		
+
 		return charts;
 	}
 	private List<String> getListOfTickers(int Month)
@@ -121,16 +121,16 @@ public class main extends HttpServlet{
 		String url = "http://www.nasdaq.com/markets/ipos/activity.aspx?tab=pricings&month=2014-"+Month;
 		System.out.println("Using Nasdaq list : "+url);
 		 driver.get(url);
-		 
+
 		 boolean limit=true;
 		 int i =0;
 		 while(limit)
 		 {
 			 WebElement webElement = getWebElement(driver,i); 
-			 
+
 			 if (webElement != null)
 			 {
-				
+
 			 System.out.println(webElement.getText());
 			 _Tickers.add(webElement.getText());
 			 i++;
@@ -138,21 +138,21 @@ public class main extends HttpServlet{
 			 else
 			 {
 				 limit =false;
-				 
+
 			 }
 		 }
-		 
+
 		return _Tickers;
 		}
 		catch (Exception e)
 		{
 			return null;
 		}
-		
-		
-		
+
+
+
 	}
-	
+
 	public static String GetWatchlist()
 	{
 		Cache c = new Cache();
@@ -160,7 +160,7 @@ public class main extends HttpServlet{
 		String result="";
 		for(WatchlistStruct s : c.getWatchlist())
 	       {
-			result += "<tr onClick=\"Watchlist_click('"+s.GetTicker()+"')\">"+
+			result += "<tr class=\"watchlist \" onClick=\"Watchlist_click('"+s.GetTicker()+"')\" contenteditable=\"true\">"+
 				"<td>"+
 				s.GetTicker()+
 				"</td>"+
@@ -170,9 +170,9 @@ public class main extends HttpServlet{
 				"</tr>";
 	       }
 		return result;
-		
+
 	}
-	
+
 	public  WebElement getWebElement(WebDriver driver,int i) {
      WebElement myDynamicElement = null;
      try {
@@ -183,10 +183,10 @@ public class main extends HttpServlet{
      }
  }
 
-	
-	
-	
-	
-	
-	
+
+
+
+
+
+
 }

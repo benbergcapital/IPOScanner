@@ -12,7 +12,7 @@ public class Cache {
 	 private static Cache instance = null;
 	 private Map<Integer,List<String>> _ListOfAllTickers;
 	 private List<NasdaqIpoTickers> _ListOfUpcomingTickers;
-	 private String Test="";
+
 	 private Watchlist _watchlist;
 	   protected Cache() {
 		   _ListOfAllTickers = new HashMap<Integer,List<String>>();
@@ -35,15 +35,7 @@ public class Cache {
 	   }
 	   
 	   
-	   public void SetTest(String value)
-	   {
-		   instance.Test = value;
-		   
-	   }
-	   public String getTest()
-	   {
-		   return instance.Test;
-	   }
+	  
 	   public void SetUpcomingTickers(List<NasdaqIpoTickers> Tickers)
 	   {
 	   this._ListOfUpcomingTickers = Tickers;

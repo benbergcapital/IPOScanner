@@ -27,7 +27,10 @@ public class PreCache extends HttpServlet{
 	  
 	public void init() throws ServletException
     {
+	 NewsScraper n = new NewsScraper();
 	 
+		
+		
 		  System.out.println("Running startup cache");
 		  NasdaqIPOWorker N = new NasdaqIPOWorker();
 		  

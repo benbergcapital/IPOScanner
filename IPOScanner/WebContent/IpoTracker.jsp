@@ -34,19 +34,29 @@
     <!-- Local JavaScript -->
     <script src="js/docs.js"></script>
     <script src="js/github.info.js"></script>
+<style>
+#wrapper {
+    width: 100%;
+    height:100%;
+}
+#left {
+    width: 200px;
+    
+    float:left; /* add this */
+   
+}
+#right {
+  margin-left: 220px;
+}
+</style>
 
     <title>Metro UI CSS : Metro Bootstrap CSS Library</title>
 </head>
 <body>
-<div class="metro place-left">
 <header class="bg-dark" data-load="header.html"></header>
-<table>
-<tr>
-<td valign="top" >
-
-    
+<div id="wrapper">
+<div class="metro place-left" id="left">
    
-     
      <nav class="sidebar light">
        <ul>
             <li class="active"><a href="IpoTracker.jsp"><i class="icon-home"></i>IPO Tracker</a></li>
@@ -57,9 +67,9 @@
 	
 	
 
-</td>
-<td>
-<div class="main">
+
+ </div>
+<div class="main" id="right">
 
  <ul class="tabs" data-persist="true">
    
@@ -97,12 +107,12 @@
      
  	    %>
      
+	</div>
+	
+	
+ 	</div>
+ </div>
+ </div>
 
-
-</div>
- </td>
- </tr>
- </table>
- </div
 </body>
 </html>
