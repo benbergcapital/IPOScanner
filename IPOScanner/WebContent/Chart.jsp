@@ -8,47 +8,42 @@
 <script language="javascript" type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
 <script src="http://code.highcharts.com/stock/highstock.js"></script>
 <script src="http://code.highcharts.com/stock/modules/exporting.js"></script>
-
+<script src="/json2.js"></script>
 <script>
 $(function() {
-	$.getJSON('http://www.highcharts.com/samples/data/jsonp.php?a=e&filename=aapl-ohlc.json&callback=?', function(data) {
-alert(data);
-		// create the chart
-		$('#container').highcharts('StockChart', {
-			
-
-			rangeSelector : {
-				inputEnabled: $('#container').width() > 480,
-				selected : 1
-			},
-
-			title : {
-				text : 'AAPL Stock Price'
-			},
-
-			series : [{
-				type : 'candlestick',
-				name : 'AAPL Stock Price',
-				data : data,
-				dataGrouping : {
-					units : [
-						['week', // unit name
-						[1] // allowed multiples
-					], [
-						'month', 
-						[1, 2, 3, 4, 6]]
-					]
-				}
-			}]
-		});
-	});
+	
+	var dataString ={"Ticker":"TWTR"};
+	$.ajax({
+	    type: "POST",
+	    url: "MarketDataRequest.do",
+	    data: dataString,
+	    success: function(jsonData) {
+	    	alert(jsonData);
+	
+	
+//	var da = "[1402657800000, 30.14],[1402658400000, 34.76],[1402659000000, 34.34],[1402659600000, 33.9]";
+  
+    //alert(dad);
+    alert(jsonData);
+	window.chart = new Highcharts.StockChart({
+        chart : {
+            renderTo : 'container'
+        },
+        title : {
+            text : 'My chart'
+        },
+        series : [{
+            name : 'My Series',
+            data : JSON.parse("[" + jsonData + "]")
+        }]
+    });
+	    }});
 });
 
 </script>
 </head>
 <body>
 
-<p>Click me away!</p>
-<div id="container" style="height: 400px; min-width: 310px"></div>
+<div id="container" style="height: 500px; min-width: 500px"></div>
 </body>
 </html>

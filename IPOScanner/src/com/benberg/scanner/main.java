@@ -93,7 +93,11 @@ public class main extends HttpServlet{
 		}
 		return response;
 	}
-
+	public static String NewMarketDataRequest()
+	{
+		
+		return "asdasd";
+	}
 
 	public static String getCharts(int Month)
 	{ 

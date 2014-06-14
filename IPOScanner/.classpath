@@ -53,5 +53,6 @@
 	<classpathentry kind="lib" path="C:/Users/Ben/Downloads/selenium-java-2.41.0/selenium-2.41.0/libs/xml-apis-1.4.01.jar"/>
 	<classpathentry kind="lib" path="C:/Users/Ben/Downloads/selenium-java-2.41.0/selenium-2.41.0/selenium-java-2.41.0.jar"/>
 	<classpathentry kind="lib" path="C:/Users/Ben/Documents/APIs/mysql-connector-java-5.1.23/mysql-connector-java-5.1.23-bin.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Ben/Documents/APIs/rabbitmq-client.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>

@@ -11,6 +11,8 @@ import javax.servlet.ServletContextListener;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 
+import com.benberg.marketdata.MarketDataRequester;
+
 public class PreCache extends HttpServlet{
 	
 	
@@ -61,7 +63,11 @@ public class PreCache extends HttpServlet{
 		
 		 //Connect to DB
 		 c.ConnectToDatabase();
-		
+		 
+		 //Connect to Market Data Queues
+		 MarketDataRequester MDR = new MarketDataRequester();
+		 MDR = MarketDataRequester.getInstance();
+		 MDR.Connect();
 	  }
 	  
 	  
