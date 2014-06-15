@@ -63,7 +63,7 @@ public class PreCache extends HttpServlet{
 	//	 c.SetUpcomingTickers(N.getListOfUpcomingTickers());
 		
 		 //Connect to DB
-	//	 c.ConnectToDatabase();
+		 c.ConnectToDatabase();
 		 
 		 //Connect to Market Data Queues
 		 MarketDataRequester MDR = new MarketDataRequester();

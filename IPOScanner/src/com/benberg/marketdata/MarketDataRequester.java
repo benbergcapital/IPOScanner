@@ -77,7 +77,8 @@ public class MarketDataRequester {
 		  try 
 		  {
 			  System.out.println(" [*] Waiting for messages on queue "+q_WebIn);
-			QueueingConsumer.Delivery delivery = consumer.nextDelivery();
+			QueueingConsumer.Delivery delivery = consumer.nextDelivery(10000);
+			
 			return fromBytes( delivery.getBody());
 			   
 		  } 

@@ -13,9 +13,11 @@
 <script>
 
 $(function() {
-	GetData("TWTR","3Day5Min","chart3");
-	GetData("TWTR","1Day1Min","chart2");
-	GetData("TWTR","50Day1D","chart1");
+	var Stock = "<%= request.getParameter("name") %>";
+	
+	GetData(Stock,"2Day1Min","chart1");
+	GetData(Stock,"50Day1D","chart2");
+	
 });
 	var GlobalTicker ="TWTR";
 function GetData(Ticker,Timeframe,chart)
@@ -122,29 +124,29 @@ function choose(TimeFrame){
 
 
 </script>
+<style type="text/css">
+body{
+margin: 0px;
+width:100%;
+}
+
+</style>
 </head>
 <body>
-<div id="game">
-    <button onClick="choose('50Day1D')">50 day 1D</button>
-    <button onClick="choose('1Day1Min')">1 day 1m</button>
-    <button onClick="choose('3Day5Min')">3day 5m</button>
-</div>
-<table>
+<div  style="width:100%;" >
+<table rules="all" id="table1" width="95%">
 <tr>
-<td width="500px">
-<div id="chart2" style="height: 100%; width: 100%"></div>
-</td>
-<td>
-<div id="chart3" style="height: 100%; width: 100%"></div>
+<td >
+<div id="chart1" ></div>
 </td>
 </tr>
 <tr>
-<td colspan="2" width="1000px">
-<div id="chart1" style="height: 100%; width: 100%"></div>
+<td>
+<div id="chart2" ></div>
 </td>
 </tr>
 </table>
-
+</div>
 
 </body>
 </html>

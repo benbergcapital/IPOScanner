@@ -39,11 +39,16 @@
 
 function Watchlist_click(Ticker)
 {
-	//alert(Ticker);
 
+	document.getElementById("charts").innerHTML = "<iframe src=\"\Chart.jsp?name="+Ticker+"\"></iframe>";
 	
 }
 
+function NewTicker()
+{
+var Ticker = document.getElementById('entry').value;
+Watchlist_click(Ticker);
+}
 function Save_Watchlist()
 {
 var json="";
@@ -117,22 +122,34 @@ td {
 }
 tr {cursor: pointer;}
 
-main {
-float:right;
-}
+
 #wrapper {
     width: 100%;
+    height:100%
     
 }
-#left {
+#menu {
     width: 200px;
     float:left; /* add this */
    
 }
-#right {
-  padding-left: 10px;
-  margin-left: 220px;
+#content
+{
+width: 100%;
+height:100%
+
 }
+#watchlist {
+  padding-left: 10px;
+	float:left
+}
+#charts{
+ padding-left: 10px;
+  margin-left: 380px;
+height:100%
+
+}
+iframe {height:100%;width:100%}
 </style>
 
     <title>Metro UI CSS : Metro Bootstrap CSS Library</title>
@@ -141,7 +158,7 @@ float:right;
 <header class="bg-dark" data-load="header.html"></header>
 <div id="wrapper">
 
-<div class="metro place-left" id="left">
+<div class="metro place-left" id="menu">
 
  
    
@@ -157,7 +174,12 @@ float:right;
 	
 
  </div>
-<div class="main" id="right" >
+<div id="content" >
+
+
+<div id="watchlist">
+<input type="text" id="entry" value="FSLR">
+<button onclick="NewTicker()">Try it</button>
 <input id="clickMe" type="button" value="clickme" onclick="Save_Watchlist();" />
 <table border="0" id="watchlisttable">
 <th>Ticker</th><th>Notes</th>
@@ -168,10 +190,13 @@ float:right;
  	    
 
 </table>
-
-
 </div>
+
+
+ <div id="charts"></div>
  
 </div>
+</div>
+
 </body>
 </html>
