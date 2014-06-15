@@ -12,7 +12,7 @@ import java.util.UUID;
 public class ListenForResponse extends Thread{
 
 	
-	public String SendNewMarketDataRequest(String Ticker)
+	public String SendNewMarketDataRequest(String Ticker,String TimeFrame)
 	{
 		 try {
 		
@@ -23,29 +23,16 @@ public class ListenForResponse extends Thread{
 		
 		  MarketDataRequester MDR = new MarketDataRequester();
 		  MDR = MarketDataRequester.getInstance();
-		  MDR.Connect();
-		  Channel channel = MDR.channel;
-		  String q_MarketDataIn =MDR.q_MarketDataIn;
-		 String q_WebIn = MDR.q_WebIn;
-			SendMarketDataRequest(Ticker,channel,q_MarketDataIn,CorrelationId);
-		
-			// TODO Auto-generated catch block
-			
-		
-		  
-		  
-		   System.out.println(" [*] Waiting for messages on queue "+q_WebIn);
-		    
-		    QueueingConsumer consumer = new QueueingConsumer(channel);
-		    channel.basicConsume(q_WebIn, true, consumer);
-		    
-			    while (true) {
-			      QueueingConsumer.Delivery delivery = consumer.nextDelivery();
-			     String message = new String(delivery.getBody());
-			      
-			      System.out.println(" [x] Received '" + message + "'");
+	
+		    MDR.SendMarketDataRequest(new NewMarketDataRequest(Ticker, CorrelationId,TimeFrame));
+	
+
+		   NewMarketDataRequest _message =MDR.WaitForData(null);
+		   
+		   
+			 //     System.out.println(" [x] Received '" + _message. + "'");
 			     
-			      NewMarketDataRequest _message = fromBytes( delivery.getBody());
+			//      NewMarketDataRequest _message = fromBytes( delivery.getBody());
 			    //  if (_message.GetCorrelationId().equals(CorrelationId))
 			    //  {
 			    	  //Correct response, Lets process
@@ -56,7 +43,7 @@ public class ListenForResponse extends Thread{
 			    	  
 			     // }
 			      //TODO Leave message on queue for another process.
-			    }	      
+			    	      
 		   
 		    } 
 		   
@@ -67,6 +54,7 @@ public class ListenForResponse extends Thread{
 		    
 		
 	}
+	/*
 	private void  SendMarketDataRequest(String Ticker,Channel channel,String q_MarketDataIn,String CorrelationId) throws IOException
 	{
 		//create object
@@ -76,24 +64,8 @@ public class ListenForResponse extends Thread{
 		
 		
 	}
-	public  NewMarketDataRequest fromBytes(byte[] body) {
-		NewMarketDataRequest obj = null;
-	    try {
-	        ByteArrayInputStream bis = new ByteArrayInputStream (body);
-	        ObjectInputStream ois = new ObjectInputStream (bis);
-	        obj = (NewMarketDataRequest)ois.readObject();
-	        ois.close();
-	        bis.close();
-	    }
-	    catch (IOException e) {
-	        e.printStackTrace();
-	    }
-	    catch (ClassNotFoundException ex) {
-	        ex.printStackTrace();
-	    }
-	    return obj;     
-	}
 	
+	*/
 	
 	
 }

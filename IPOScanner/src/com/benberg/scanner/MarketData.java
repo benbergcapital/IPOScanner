@@ -19,11 +19,17 @@ public class MarketData extends HttpServlet{
 	  public void doPost(HttpServletRequest request,HttpServletResponse response)throws IOException, ServletException{
 
 		  String Ticker = request.getParameter("Ticker");
+		  String TimeFrame = request.getParameter("Timeframe");
 		  PrintWriter out = response.getWriter();
 		  
 		 ListenForResponse L = new ListenForResponse();
-		 String result= L.SendNewMarketDataRequest(Ticker);
+		 String result= L.SendNewMarketDataRequest(Ticker,TimeFrame);
 				  
+		
+		 
+		
+		 
+		 
 		  out.println(result);
 	  
 }
