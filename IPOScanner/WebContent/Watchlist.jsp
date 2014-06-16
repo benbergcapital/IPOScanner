@@ -77,7 +77,15 @@ $(document).ready(function(){
 	});
 	// Note: currently only works for row without '.alt' css class assigned (ie. empty)
 	// 
-
+function myFunction()
+{
+		alert("clicked");
+var table = document.getElementById("watchlisttable");
+var row = table.insertRow(-1);
+var cell1 = row.insertCell(0);
+var cell1 = row.insertCell(1);
+cell1.ClassName='watchlist';
+}
 </script>
 
 <style>
@@ -152,7 +160,7 @@ height:100%
 iframe {height:100%;width:100%}
 </style>
 
-    <title>Metro UI CSS : Metro Bootstrap CSS Library</title>
+    <title>Tickers</title>
 </head>
 <body>
 <header class="bg-dark" data-load="header.html"></header>
@@ -178,9 +186,10 @@ iframe {height:100%;width:100%}
 
 
 <div id="watchlist">
-<input type="text" id="entry" value="FSLR">
-<button onclick="NewTicker()">Try it</button>
-<input id="clickMe" type="button" value="clickme" onclick="Save_Watchlist();" />
+<input type="text" id="entry" value="FSLR" style="width:50px;">
+<button onclick="NewTicker()" style="width:50px;">Go</button>
+<button onclick="myFunction()">Try it</button>
+<input id="clickMe" type="button" value="sa" onclick="Save_Watchlist();" />
 <table border="0" id="watchlisttable">
 <th>Ticker</th><th>Notes</th>
 

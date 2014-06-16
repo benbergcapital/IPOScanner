@@ -9,13 +9,13 @@
 <script src="http://code.highcharts.com/stock/highstock.js"></script>
 <script src="http://code.highcharts.com/stock/modules/exporting.js"></script>
 <script src="/json2.js"></script>
-<script src="theme.js"></script>
+
 <script>
 
 $(function() {
 	var Stock = "<%= request.getParameter("name") %>";
 	
-	GetData(Stock,"2Day1Min","chart1");
+	GetData(Stock,"3Day1Min","chart1");
 	GetData(Stock,"50Day1D","chart2");
 	
 });
@@ -84,8 +84,8 @@ function GetData(Ticker,Timeframe,chart)
 		    },
 		    plotOptions: {
 		    	candlestick: {
-		    		color: 'green',
-		    		upColor: 'red'
+		    		color: 'red',
+		    		upColor: 'green'
 		    	}
 		    },
 		    yAxis: [{
