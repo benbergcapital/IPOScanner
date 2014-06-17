@@ -74,17 +74,53 @@ $(document).ready(function(){
 	    $(this).closest("tr").siblings().removeClass("highlighted");
 	    $(this).toggleClass("highlighted");
 	  })
+	  
+	  $('.watchlisttable').on('click', 'td', function() { // td not tr
+  var ticker = $(this).closest('tr').find('td:eq(0)').text();
+	//  alert(ticker);
+	if (ticker && typeof ticker != "undefined")
+		{
+	  Watchlist_click(ticker);
+		}
+});
+	  
+	  
+	 	  
+	  
+	  
 	});
 	// Note: currently only works for row without '.alt' css class assigned (ie. empty)
 	// 
 function myFunction()
 {
-		alert("clicked");
+	
 var table = document.getElementById("watchlisttable");
 var row = table.insertRow(-1);
+var div1 = document.createElement('div');
+var div2 = document.createElement('div');
+div1.innerHTML = "";
+div2.innerHTML = "";
+
+div1.contentEditable = true;
+div2.contentEditable = true;
 var cell1 = row.insertCell(0);
-var cell1 = row.insertCell(1);
-cell1.ClassName='watchlist';
+cell1.appendChild(div1);
+var cell2 = row.insertCell(1);
+cell2.appendChild(div2);
+row.className =  "watchlist";
+
+var createClickHandler = 
+    function(row) 
+    {
+        return function() { 
+        	document.getElementById("charts").innerHTML = "<iframe src=\"\Chart.jsp?name="+Ticker+"\"></iframe>";
+                         };
+    }
+
+row.onclick = createClickHandler(row);
+
+
+
 }
 </script>
 
@@ -153,7 +189,7 @@ height:100%
 }
 #charts{
  padding-left: 10px;
-  margin-left: 380px;
+  margin-left: 400px;
 height:100%
 
 }
@@ -187,10 +223,10 @@ iframe {height:100%;width:100%}
 
 <div id="watchlist">
 <input type="text" id="entry" value="FSLR" style="width:50px;">
-<button onclick="NewTicker()" style="width:50px;">Go</button>
-<button onclick="myFunction()">Try it</button>
-<input id="clickMe" type="button" value="sa" onclick="Save_Watchlist();" />
-<table border="0" id="watchlisttable">
+<button onclick="NewTicker()" style="width:40px;">Go</button>
+<button onclick="myFunction()">New</button>
+<!-- <input id="clickMe" type="button" value="save" onclick="Save_Watchlist();" /> -->
+<table border="0" id="watchlisttable" class="watchlisttable">
 <th>Ticker</th><th>Notes</th>
 
  

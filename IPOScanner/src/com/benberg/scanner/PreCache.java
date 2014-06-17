@@ -29,7 +29,7 @@ public class PreCache extends HttpServlet{
 	  
 	public void init() throws ServletException
     {
-		/*
+		
 		NewsScraper n = new NewsScraper();
 	 
 		
@@ -41,7 +41,7 @@ public class PreCache extends HttpServlet{
 	
 		 
 		 int month = cal.get(Calendar.MONTH);
-		int month = 2; //for debug quickness
+		//int month = 2; //for debug quickness
 		 
 		 List<String> _Tickers = new ArrayList<String>();
 		 Map<Integer,List<String>> _ListOfAllTickers = new HashMap<Integer,List<String>>();
@@ -53,14 +53,14 @@ public class PreCache extends HttpServlet{
 					
 			 
 		 }
-		 	*/ 
+		 	
 		 Cache c = new Cache();
 		 c=Cache.getInstance();
-	//	 c.setTickerList(_ListOfAllTickers);	
+		 c.setTickerList(_ListOfAllTickers);	
 		
 		 
 		 //Get Upcoming Prices
-	//	 c.SetUpcomingTickers(N.getListOfUpcomingTickers());
+		 c.SetUpcomingTickers(N.getListOfUpcomingTickers());
 		
 		 //Connect to DB
 		 c.ConnectToDatabase();
