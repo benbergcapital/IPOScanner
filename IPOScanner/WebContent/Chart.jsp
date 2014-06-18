@@ -16,7 +16,7 @@ $(function() {
 	var Stock = "<%= request.getParameter("name") %>";
 	
 	GetData(Stock,"3Day1Min","chart1");
-	GetData(Stock,"50Day1D","chart2");
+	GetData(Stock,"1Yr1D","chart2");
 	
 });
 	var GlobalTicker ="TWTR";
