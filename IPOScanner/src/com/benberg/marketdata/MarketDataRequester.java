@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.benberg.struct.NewMarketDataRequest;
+import com.rabbitmq.client.AMQP.BasicProperties;
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Connection;
 import com.rabbitmq.client.ConnectionFactory;
@@ -24,6 +25,8 @@ public class MarketDataRequester {
 	 Connection connection;
 	 Channel channel;
 	 QueueingConsumer consumer;
+	 private String replyQueueName;
+	 private String requestQueueName = "rpc_queue";
 	 
 	 public static MarketDataRequester getInstance() {
 	      if(instance == null) {
@@ -42,13 +45,14 @@ public class MarketDataRequester {
 		    
 		    connection = factory.newConnection();
 		    channel = connection.createChannel();
-		    channel = connection.createChannel();
-		    channel.queueDeclare(q_WebIn, false, false, false, null);
-		    channel.queueDeclare(q_MarketDataIn, false, false, false, null);
+		    replyQueueName = channel.queueDeclare().getQueue(); 
+		//    channel = connection.createChannel();
+		//    channel.queueDeclare(q_WebIn, false, false, false, null);
+		 //   channel.queueDeclare(q_MarketDataIn, false, false, false, null);
 		    
 		     consumer = new QueueingConsumer(channel);
-		    channel.basicConsume(q_WebIn, true, consumer);
-		    
+		  //  channel.basicConsume(q_WebIn, true, consumer);
+		     channel.basicConsume(replyQueueName, true, consumer);
 		 }
 		 catch(Exception e)
 		 {
@@ -59,16 +63,43 @@ public class MarketDataRequester {
 		 
 	 }
 	 
-	 public void SendMarketDataRequest(NewMarketDataRequest _message)
+	 public NewMarketDataRequest SendMarketDataRequest(NewMarketDataRequest _message)
 	 {
 		 try{
-		 channel.basicPublish("", q_MarketDataIn, null, _message.toBytes());
-		    System.out.println(" [x] Sent to queue :"+q_MarketDataIn);
+
+			 String corrId = _message.GetCorrelationId();
+
+			    BasicProperties props = new BasicProperties
+			                                .Builder()
+			                                .correlationId(corrId)
+			                                .replyTo(replyQueueName)
+			                                .build();
+			    channel.basicPublish("", requestQueueName, props, _message.toBytes());
+			
+			    while (true) 
+			    {
+			        QueueingConsumer.Delivery delivery = consumer.nextDelivery(10000);
+			      
+			        if (delivery.getProperties().getCorrelationId().equals(corrId)) 
+			        	{
+			        	 System.out.println("Correlaation id match : "+corrId);
+			        	return fromBytes( delivery.getBody());
+			        	
+			        	}
+			        else
+			        {
+			        	System.out.println(delivery.getProperties().getCorrelationId()+" not for me");
+			        }
+			        
+			    }
 		 }
 		 catch (Exception e)
 		 {
-			 System.out.println(e.toString());
+			 e.printStackTrace();
+			 return null;
 		 }
+		
+		
 	 }
 		
 	 public NewMarketDataRequest WaitForData(String Correlation_Id)
@@ -79,7 +110,7 @@ public class MarketDataRequester {
 			  System.out.println(" [*] Waiting for messages on queue "+q_WebIn);
 			QueueingConsumer.Delivery delivery = consumer.nextDelivery(10000);
 			
-			return fromBytes( delivery.getBody());
+			
 			   
 		  } 
 		 catch (Exception e) 

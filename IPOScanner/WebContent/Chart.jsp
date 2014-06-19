@@ -37,7 +37,7 @@ function GetData(Ticker,Timeframe,chart)
 	    	    	
 	    	    	
 	    	    	var data = JSON.parse("["+jsonData+"]");
-	    	    	//alert(data);   	
+	    	    	alert(data);   	
 	    	    	
 	
 	//	var data = [[1182124800000,17.61,17.88,17.51,17.87,227971779],
