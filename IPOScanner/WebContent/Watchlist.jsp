@@ -49,7 +49,7 @@ function NewTicker()
 var Ticker = document.getElementById('entry').value;
 Watchlist_click(Ticker);
 }
-function Save_Watchlist()
+function SaveWatchlist()
 {
 var json="";
 	
@@ -57,13 +57,25 @@ var table = document.getElementById('watchlisttable');
 //var mytablebody = myTable.getElementsByTagName("tbody")[0];
 //var trs = mytablebody.getElementsByTagName('td');
  for (var i=1;i < table.rows.length;i++){
-json += "{"+table.rows[i].cells[0].innerText+";"+table.rows[i].cells[1].innerText+"}";
+	 if(i!=1)
+		 json+=";";
+json += "{Ticker:"+table.rows[i].cells[0].innerText+", Value:"+encodeURIComponent(table.rows[i].cells[1].innerText)+"}";
 
  }
+alert(json);
+ var dataString ={"Data":json};
+	alert(dataString);
+ $.ajax({
+	    type: "POST",
+	    url: "SaveWatchlist.do",
+	    data: dataString,
+	    success: function(response) {
+ 
+alert(response);
+		}
+ });
 
 }
-
-
 
 
 
@@ -91,7 +103,7 @@ $(document).ready(function(){
 	});
 	// Note: currently only works for row without '.alt' css class assigned (ie. empty)
 	// 
-function myFunction()
+function NewRow()
 {
 	
 var table = document.getElementById("watchlisttable");
@@ -193,6 +205,17 @@ height:100%
 height:100%
 
 }
+input.button-add {
+    background-image: url(/images/buttons/add.png); /* 16px x 16px */
+    background-color: transparent; /* make the button transparent */
+    background-repeat: no-repeat;  /* make the background image appear only once */
+    background-position: 0px 0px;  /* equivalent to 'top left' */
+    border: none;           /* assuming we don't want any borders */
+    cursor: pointer;        /* make the cursor like hovering over an <a> element */
+    height: 16px;           /* make this the size of your image */
+    padding-left: 16px;     /* make text start to the right of the image */
+    vertical-align: middle; /* align the text vertically centered */
+}
 iframe {height:100%;width:100%}
 </style>
 
@@ -224,7 +247,8 @@ iframe {height:100%;width:100%}
 <div id="watchlist">
 <input type="text" id="entry" value="FSLR" style="width:50px;">
 <button onclick="NewTicker()" style="width:40px;">Go</button>
-<button onclick="myFunction()">New</button>
+<button onclick="NewRow()">New</button>
+<button onclick="SaveWatchlist()">S</button>
 <!-- <input id="clickMe" type="button" value="save" onclick="Save_Watchlist();" /> -->
 <table border="0" id="watchlisttable" class="watchlisttable">
 <th>Ticker</th><th>Notes</th>

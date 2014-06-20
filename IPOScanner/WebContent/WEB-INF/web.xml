@@ -38,6 +38,17 @@
         <servlet-name>MarketDataRequest</servlet-name>
         <url-pattern>/MarketDataRequest.do</url-pattern>
     </servlet-mapping>
+    
+    <servlet>
+        <servlet-name>SaveWatchlist</servlet-name>
+        <servlet-class>com.benberg.scanner.SaveWatchlist</servlet-class>
+    </servlet>
+     <servlet-mapping>
+        <servlet-name>SaveWatchlist</servlet-name>
+        <url-pattern>/SaveWatchlist.do</url-pattern>
+    </servlet-mapping>
+    
+    
     <context-param>
       <param-name>webmaster</param-name>
       <param-value>myaddress@mycompany.com</param-value>
