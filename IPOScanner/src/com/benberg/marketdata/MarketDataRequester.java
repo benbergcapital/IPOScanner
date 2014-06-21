@@ -78,7 +78,7 @@ public class MarketDataRequester {
 			
 			    while (true) 
 			    {
-			        QueueingConsumer.Delivery delivery = consumer.nextDelivery(10000);
+			        QueueingConsumer.Delivery delivery = consumer.nextDelivery(100000);
 			      
 			        if (delivery.getProperties().getCorrelationId().equals(corrId)) 
 			        	{
