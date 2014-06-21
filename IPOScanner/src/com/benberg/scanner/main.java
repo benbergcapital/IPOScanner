@@ -11,6 +11,7 @@ import javax.servlet.*;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 import java.io.*;
+import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -157,7 +158,7 @@ public class main extends HttpServlet{
 
 	}
 
-	public static String GetWatchlist()
+	public static String GetWatchlist() throws UnsupportedEncodingException
 	{
 		Cache c = new Cache();
 		c=Cache.getInstance();
@@ -170,7 +171,7 @@ public class main extends HttpServlet{
 				s.GetTicker()+
 				"</td>"+
 				"<td>"+
-				s.GetNotes()+
+				URLDecoder.decode(s.GetNotes(),"UTF-8" )+
 				"</td>"+
 				"</tr>";
 	       }

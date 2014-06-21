@@ -21,16 +21,19 @@ public class SaveWatchlist extends HttpServlet{
 	private static final long serialVersionUID = 1L;
 
 	public void doPost(HttpServletRequest request,HttpServletResponse response)throws IOException, ServletException{
-
+		PrintWriter out = response.getWriter();
 		try{
 		
 			String foo = request.getParameter("Data");
 			String[] bar = foo.split(";");
 			System.out.println(foo);
-			
+			 Cache c = new Cache();
+			c=Cache.getInstance();
+				
 			
 			for(String value : bar)
 			{
+				try{
 		JSONObject jObj = new JSONObject(value); 
 		Iterator it = jObj.keys(); //gets all the keys
 
@@ -40,19 +43,30 @@ public class SaveWatchlist extends HttpServlet{
 		    String Ticker = (String) jObj.get("Ticker"); // get value
 		    String Value= (String) jObj.get("Value");
 		    
-		    System.out.println(Ticker + " : " +  Value); // print the key and value
+		    System.out.println(Ticker + " : " +  Value.replace("'","''")); // print the key and value
+		    
+		   
+			c.SaveWatchlist(Ticker, Value.replace("'","''"));
+				}
+				catch(Exception e)
+				{
+					
+				}
+			
+		    
 		}
 		
 
 		
-		
+			 out.println("Saved");
 		}
 		catch(Exception e)
 		{
 			e.printStackTrace();
+			 out.println("Error occured during Save");
 		}
-		PrintWriter out = response.getWriter();
-		  out.println("null");
+		
+		 
 	  
 }
 	

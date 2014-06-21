@@ -69,11 +69,19 @@ public class Watchlist {
 		
 		return null;
 		
-		
-		
-		
-		
-		
+	}
+
+	public void insert(String command) {
+		 PreparedStatement pst = null;
+		 try {
+			pst = con.prepareStatement(command);
+			pst.executeUpdate();
+		//	 rs = pst.executeQuery();
+			 
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 	}
 

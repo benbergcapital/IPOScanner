@@ -201,7 +201,7 @@ height:100%
 }
 #charts{
  padding-left: 10px;
-  margin-left: 400px;
+  margin-left: 500px;
 height:100%
 
 }
@@ -217,6 +217,9 @@ input.button-add {
     vertical-align: middle; /* align the text vertically centered */
 }
 iframe {height:100%;width:100%}
+table { table-layout: fixed }
+tr:first-child td { white-space: nowrap }
+
 </style>
 
     <title>Tickers</title>
@@ -250,7 +253,9 @@ iframe {height:100%;width:100%}
 <button onclick="NewRow()">New</button>
 <button onclick="SaveWatchlist()">S</button>
 <!-- <input id="clickMe" type="button" value="save" onclick="Save_Watchlist();" /> -->
-<table border="0" id="watchlisttable" class="watchlisttable">
+<table border="0" id="watchlisttable" class="watchlisttable" style="width:230px;">
+<col width="80">
+  <col width="150">
 <th>Ticker</th><th>Notes</th>
 
  
