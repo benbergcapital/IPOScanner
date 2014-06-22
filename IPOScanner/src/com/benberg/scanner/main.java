@@ -29,6 +29,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import com.benberg.struct.NasdaqIpoTickers;
 import com.benberg.struct.WatchlistStruct;
+import java.text.DateFormatSymbols;
 
 @WebServlet("/RecentIPOs")
 public class main extends HttpServlet{
@@ -63,7 +64,8 @@ public class main extends HttpServlet{
 			String charts ="";
 			  for(String s : _ListOfTickers)
               {
-				 charts += "<img src=\"http://stockcharts.com/c-sc/sc?s="+s+"&p=D&b=5&g=0&i=0&r=1401568661849\"><br>";
+				 charts += "<img src=\"http://stockcharts.com/c-sc/sc?s="+s+"&p=D&b=5&g=0&i=0&r=1401568661849\"><br>"+
+				 "<button onclick=\"AddToWatchlist("+s+")\">Add "+s+" to watchlist</button><br>";
               }
 			  response.setContentType("text/html");
 			    PrintWriter out = response.getWriter();
@@ -107,11 +109,15 @@ public class main extends HttpServlet{
 		c=Cache.getInstance();
 		_ListOfTickers = c.getTickerList(Month);
 		String charts ="";
+	
+		String monthString = new DateFormatSymbols().getMonths()[Month];
+		
 		if (_ListOfTickers !=null)
 		{
 			for(String s : _ListOfTickers)
 	        {
-				 charts += "<img src=\"http://stockcharts.com/c-sc/sc?s="+s+"&p=D&b=5&g=0&i=p87601148800&r=1401642134677\" width=\"553\" height=\"419\"><br>";
+				 charts += "<img src=\"http://stockcharts.com/c-sc/sc?s="+s+"&p=D&b=5&g=0&i=0&r=1401568661849\"><br>"+
+						 "<button onclick=\"AddToWatchlist('"+s+"-"+monthString+"')\">Add "+s+" to watchlist</button><br>";
 	        }
 		}
 

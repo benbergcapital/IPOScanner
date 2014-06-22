@@ -53,12 +53,20 @@ public class Cache {
 	   {
 		  return _watchlist.GetWatchlist();
 	   }
+	   
+	   public boolean DeleteWatchlist()
+	   {
+		String delete = "Delete from watchlist";  
+		return _watchlist.insert(delete);
+		 
+	   }
+	   
 	public void SaveWatchlist(String ticker, String value) {
 		
-		String delete = "Delete from watchlist where Ticker = '"+ticker+"'";
+		
 		String insert = "insert into watchlist values ('"+ticker+"','"+value+"')";
 		
-		_watchlist.insert(delete);
+	
 		_watchlist.insert(insert);
 		
 		// TODO Auto-generated method stub

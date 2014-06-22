@@ -20,43 +20,48 @@ public class SaveWatchlist extends HttpServlet{
 	
 	private static final long serialVersionUID = 1L;
 
-	public void doPost(HttpServletRequest request,HttpServletResponse response)throws IOException, ServletException{
+	public void doPost(HttpServletRequest request,HttpServletResponse response)throws IOException, ServletException
+	{
 		PrintWriter out = response.getWriter();
+		
+	
 		try{
 		
-			String foo = request.getParameter("Data");
-			String[] bar = foo.split(";");
-			System.out.println(foo);
+			String _RequestString = request.getParameter("Data");
+			String[] _RequestArray = _RequestString.split(";");
+			System.out.println(_RequestString);
 			 Cache c = new Cache();
-			c=Cache.getInstance();
-				
+			c=Cache.getInstance();	
 			
-			for(String value : bar)
+			//check that delete worked. If this didnt we want to stop here
+			if(!c.DeleteWatchlist())
+			{
+				 out.println("Error occured during Save");
+				 return;
+			}
+			//loop over all 
+			for(String value : _RequestArray)
 			{
 				try{
-		JSONObject jObj = new JSONObject(value); 
-		Iterator it = jObj.keys(); //gets all the keys
-
-	//	while(it.hasNext())
-	//	{
-		  //  String Ticker = (String) it.next(); // get key
-		    String Ticker = (String) jObj.get("Ticker"); // get value
-		    String Value= (String) jObj.get("Value");
-		    
-		    System.out.println(Ticker + " : " +  Value.replace("'","''")); // print the key and value
-		    
-		   
-			c.SaveWatchlist(Ticker, Value.replace("'","''"));
-				}
-				catch(Exception e)
-				{
 					
-				}
+						JSONObject jObj = new JSONObject(value); 
+						Iterator it = jObj.keys(); //gets all the keys
+
+
+					    String Ticker = (String) jObj.get("Ticker");
+					    String Value= (String) jObj.get("Value");
+		    
+					    System.out.println(Ticker + " : " +  Value.replace("'","''")); // print the key and value
+					    
+						c.SaveWatchlist(Ticker, Value.replace("'","''")); //escape single quotation
+					}
+					catch(Exception e)
+					{
+					e.printStackTrace();
+					}
 			
 		    
 		}
-		
-
 		
 			 out.println("Saved");
 		}

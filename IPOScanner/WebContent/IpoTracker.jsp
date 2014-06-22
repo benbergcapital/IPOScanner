@@ -23,6 +23,7 @@
 
 
     <!-- Load JavaScript Libraries -->
+       <script language="javascript" type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
     <script src="js/jquery/jquery.min.js"></script>
     <script src="js/jquery/jquery.widget.min.js"></script>
     <script src="js/jquery/jquery.mousewheel.js"></script>
@@ -34,6 +35,38 @@
     <!-- Local JavaScript -->
     <script src="js/docs.js"></script>
     <script src="js/github.info.js"></script>
+ <script>
+ 
+ function AddToWatchlist(concat)
+ {
+	// alert(Ticker);
+	var arr = concat.split("-");
+	 var dataString ={"Ticker":arr[0],"Month":arr[1]};
+	 alert(dataString);
+	 $.ajax({
+		    type: "POST",
+		    url: "AddToWatchlist.do",
+		    data: dataString,
+		    success: function(response) {
+	 
+	alert(response);
+			}
+	 });
+	 
+	 
+ }
+ 
+ 
+ 
+ 
+ 
+ 
+ </script>   
+    
+    
+    
+    
+    
 <style>
 #wrapper {
     width: 100%;

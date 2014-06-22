@@ -27,9 +27,19 @@
     <script src="js/jquery/jquery.widget.min.js"></script>
     <script src="js/jquery/jquery.mousewheel.js"></script>
     <script src="js/prettify/prettify.js"></script>
+    
+    
+    
     <script language="javascript" type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
-<script src="http://code.highcharts.com/stock/highstock.js"></script>
-<script src="http://code.highcharts.com/stock/modules/exporting.js"></script>
+	<script src="http://code.highcharts.com/stock/highstock.js"></script>
+	<script src="http://code.highcharts.com/stock/modules/exporting.js"></script>
+	<script type="text/javascript" src="indicators.js"></script>
+	<script type="text/javascript" src="sma.js"></script>
+	<script type="text/javascript" src="ema.js"></script>
+	<script type="text/javascript" src="atr.js"></script>
+	<script type="text/javascript" src="rsi.js"></script>
+	<script type="text/javascript" src="demo.js"></script>
+
     
 
     <!-- Metro UI CSS JavaScript plugins -->
@@ -42,7 +52,6 @@
 
 function Watchlist_click(Ticker)
 {
-alert("here");
 //	document.getElementById("charts").innerHTML = "<iframe src=\"\Chart.jsp?name="+Ticker+"\"></iframe>";
 GetData(Ticker,"3Day1Min","chart1");
 GetData(Ticker,"1Yr1D","chart2");
@@ -50,7 +59,9 @@ GetData(Ticker,"1Yr1D","chart2");
 
 function NewTicker()
 {
+
 var Ticker = document.getElementById('entry').value;
+alert(Ticker);
 Watchlist_click(Ticker);
 }
 function SaveWatchlist()
@@ -63,7 +74,10 @@ var table = document.getElementById('watchlisttable');
  for (var i=1;i < table.rows.length;i++){
 	 if(i!=1)
 		 json+=";";
-json += "{Ticker:"+table.rows[i].cells[0].innerText+", Value:"+encodeURIComponent(table.rows[i].cells[1].innerText)+"}";
+	var value = table.rows[i].cells[1].innerText;	 
+		 if (value=="")
+			 var value = "_";
+json += "{Ticker:"+table.rows[i].cells[0].innerText+", Value:"+value"}";
 
  }
 alert(json);
@@ -91,7 +105,7 @@ $(document).ready(function(){
 	    $(this).toggleClass("highlighted");
 	  })
 	  
-	  $('.watchlisttable').on('click', 'td', function() { // td not tr
+	  $('.watchlisttable').on('click', 'td:first-child', function() { // td not tr
   var ticker = $(this).closest('tr').find('td:eq(0)').text();
 	//  alert(ticker);
 	if (ticker && typeof ticker != "undefined")
@@ -105,8 +119,6 @@ $(document).ready(function(){
 	  
 	  
 	});
-	// Note: currently only works for row without '.alt' css class assigned (ie. empty)
-	// 
 function NewRow()
 {
 	
@@ -125,18 +137,19 @@ var cell2 = row.insertCell(1);
 cell2.appendChild(div2);
 row.className =  "watchlist";
 
-var createClickHandler = 
-    function(row) 
-    {
-        return function() { 
+//var createClickHandler = 
+ //   function(row) 
+  //  {
+   //     return function() { 
         //	document.getElementById("charts").innerHTML = "<iframe src=\"\Chart.jsp?name="+Ticker+"\"></iframe>";
-        	GetData(Ticker,"3Day1Min","chart1");
+   //     alert("this function");	
+    //    GetData(Ticker,"3Day1Min","chart1");
        // 	GetData(Ticker,"1Yr1D","chart2");            
         
-        };
-    }
+  //      };
+   // }
 
-row.onclick = createClickHandler(row);
+//row.onclick = createClickHandler(row);
 
 
 
@@ -146,12 +159,13 @@ row.onclick = createClickHandler(row);
 function GetData(Ticker,Timeframe,chart)
 {
 GlobalTicker=Ticker;
-//var test = "[1182124800000,17.61,17.88,17.51,17.87,227971779],[1182211200000,17.81,17.86,17.56,17.67,236173490],[1182297600000,17.70,17.81,17.36,17.36,224570395]";
 
     	var dataString ={"Ticker":Ticker,"Timeframe":Timeframe};
     	
     	$('#'+chart).html("Loading...");
-    	
+    	var high =0;
+		var low=9999;
+		
     	$.ajax({
     	    type: "POST",
     	    url: "MarketDataRequest.do",
@@ -160,15 +174,7 @@ GlobalTicker=Ticker;
     	    	
     	    	
     	    	var data = JSON.parse("["+jsonData+"]");
-    	    //	alert(data);   	
-    	    	
 
-//	var data = [[1182124800000,17.61,17.88,17.51,17.87,227971779],
-//	[1182211200000,17.81,17.86,17.56,17.67,236173490],
-//	[1182297600000,17.70,17.81,17.36,17.36,224570395],
-//	[1182384000000,17.39,17.76,17.25,17.70,216921131]];
-	
-	
 	
 	
 	// split the data set into ohlc and volume
@@ -183,8 +189,12 @@ GlobalTicker=Ticker;
 			data[i][2], // high
 			data[i][3], // low
 			data[i][4] // close
+			
 		]);
-		
+		if (data[i][2] > high)
+			high = data[i][2];
+		if (data[i][3]< low)
+			low = data[i][3];
 
 	}
 
@@ -214,32 +224,97 @@ GlobalTicker=Ticker;
 	    		upColor: 'green'
 	    	}
 	    },
-	    yAxis: [{
+	  
+	    rangeSelector : {
+            selected : 100
+        },
+	    yAxis: [
+	            
+	            {
 	        labels: {
 	    		align: 'right',
 	    		x: -3
 	    	},
 	        title: {
-	            text: '$'
+	            text: 'USD'
 	        },
 	        height: '100%',
-	        lineWidth: 2
+	        lineWidth: 2,
+	 //       min: low, max : high
 	    }],
 	    global: [{
 	        useUTC: true
 	    }],
+	    tooltip: {
+	        crosshairs: [true,true],
+        enabledIndicators: true
+	    },
 	    series: [{
 	        type: 'candlestick',
 	        name: Ticker,
-	        data: ohlc,
-	     
+	        id: 'primary',
+	        data: ohlc     
 	 
-	    }]
+	    }],
+	    indicators: [{
+            id: 'primary',
+            type: 'sma',
+            params: {
+                period: 9,
+            },
+            styles: {
+                strokeWidth: 0.1,
+                stroke: 'black',
+                dashstyle: 'solid'
+            }
+        },{
+        id: 'primary',
+        type: 'sma',
+        params: {
+            period: 21,
+        },
+        styles: {
+            strokeWidth: 0.1,
+            stroke: 'yellow',
+            dashstyle: 'solid'
+        }
+   	 },{
+         id: 'primary',
+         type: 'sma',
+         params: {
+             period: 50,
+         },
+         styles: {
+             strokeWidth: 1,
+             stroke: 'lightblue',
+             dashstyle: 'solid'
+         }
+    	 }]  
+	    
+	    
+	    
 	});
+	//alert(low);
+//	alert(high);
+	//alert(chart);
+//	var chartdes = $('chart1').highcharts();
+//	alert(yAxis.getExtremes());
+//	   var yAxis = chartdes.get('my_y');
+//	   yAxis.setExtremes(low,high);
 	
     	    }
     	    
+    	    
+    	    
+    	    
+    	    
     	});
+    	
+   // 	var chart = $('#'+chart).highcharts();
+	//    var yAxis = chart.get('my_y');
+	//    yAxis.setExtremes(low,high);
+	
+    	
 }
 
 
@@ -249,7 +324,7 @@ GlobalTicker=Ticker;
 
 <style>
 
-table{
+#watchlisttable{
 	border:1px solid #C1DAD7;
 
 }
@@ -298,7 +373,7 @@ tr {cursor: pointer;}
 #menu {
     width: 200px;
     float:left; /* add this */
-   
+	margin-left: 15px;
 }
 #content
 {
@@ -311,9 +386,9 @@ height:100%
 	float:left
 }
 #charts{
- padding-left: 10px;
-  margin-left: 500px;
-  margin-right: 50px;
+ padding-left: 0px;
+  margin-left: 470px;
+  margin-right: 20px;
 height:100%
 
 }
@@ -363,7 +438,7 @@ tr:first-child td { white-space: nowrap }
 <input type="text" id="entry" value="FSLR" style="width:50px;">
 <button onclick="NewTicker()" style="width:40px;">Go</button>
 <button onclick="NewRow()">New</button>
-<button onclick="SaveWatchlist()">S</button>
+<button onclick="SaveWatchlist()">Save</button>
 <!-- <input id="clickMe" type="button" value="save" onclick="Save_Watchlist();" /> -->
 <table border="0" id="watchlisttable" class="watchlisttable" style="width:230px;">
 <col width="80">

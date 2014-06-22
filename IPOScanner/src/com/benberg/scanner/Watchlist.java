@@ -71,18 +71,18 @@ public class Watchlist {
 		
 	}
 
-	public void insert(String command) {
+	public boolean insert(String command) {
 		 PreparedStatement pst = null;
 		 try {
 			pst = con.prepareStatement(command);
 			pst.executeUpdate();
 		//	 rs = pst.executeQuery();
-			 
+			 return true;
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+		return false;
 	}
 
 }

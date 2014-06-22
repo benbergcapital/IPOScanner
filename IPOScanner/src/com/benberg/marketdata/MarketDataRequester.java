@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.benberg.scanner.MarketDataRequestCache;
 import com.benberg.struct.NewMarketDataRequest;
 import com.rabbitmq.client.AMQP.BasicProperties;
 import com.rabbitmq.client.Channel;
@@ -27,7 +28,9 @@ public class MarketDataRequester {
 	 QueueingConsumer consumer;
 	 private String replyQueueName;
 	 private String requestQueueName = "rpc_queue";
-	 
+	 private Runnable r_ListenThread;
+	 private Thread thread;
+	 private MarketDataRequestCache MDRC;
 	 public static MarketDataRequester getInstance() {
 	      if(instance == null) {
 	         instance = new MarketDataRequester();
@@ -53,6 +56,19 @@ public class MarketDataRequester {
 		     consumer = new QueueingConsumer(channel);
 		  //  channel.basicConsume(q_WebIn, true, consumer);
 		     channel.basicConsume(replyQueueName, true, consumer);
+		     
+		     //Create Listen Thread description
+		     
+		     r_ListenThread = new Runnable() {
+		         public void run() {
+		            ListenForResponsesThread();
+		         }
+		     };
+		     
+		     MDRC = new MarketDataRequestCache();
+		     MDRC.getInstance();
+		     
+		     
 		 }
 		 catch(Exception e)
 		 {
@@ -62,36 +78,100 @@ public class MarketDataRequester {
 		 
 		 
 	 }
-	 
-	 public NewMarketDataRequest SendMarketDataRequest(NewMarketDataRequest _message)
+	private void ListenForResponse()
+	 {
+		if (thread ==null)
+		{
+				thread = new Thread(r_ListenThread);
+				thread.start();
+		}
+		if (!thread.isAlive())
+		{
+			thread = new Thread(r_ListenThread);
+			thread.start();
+		}
+		
+		else
+			System.out.println("Thread already running");
+		
+		
+		
+	 }
+	 protected void ListenForResponsesThread() 
+	 {
+		try{ 
+			while(true)
+			{
+				System.out.println("Listening for messages");
+				 QueueingConsumer.Delivery delivery = consumer.nextDelivery(100000);
+				 System.out.println(delivery);
+				 if (delivery == null)
+					 break;
+				 String CorrId = delivery.getProperties().getCorrelationId();
+				 if (CorrId!= null) 
+				   	{
+					 
+					 System.out.println("Message received for :  "+CorrId);
+					 MDRC.AddNewResponse(CorrId, fromBytes( delivery.getBody()));
+					 
+				   	}
+				 else
+				 {
+					 System.out.println("error for CorrId :  "+delivery.getProperties().getCorrelationId()); 
+				 }
+			}
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+		}
+		System.out.println("Listen thread timed out");
+			  
+	}
+
+	public NewMarketDataRequest SendMarketDataRequest(NewMarketDataRequest _message)
 	 {
 		 try{
 
-			 String corrId = _message.GetCorrelationId();
+			 String CorrId = _message.GetCorrelationId();
 
+			 SendRequest(CorrId);
+			 
+			 
 			    BasicProperties props = new BasicProperties
 			                                .Builder()
-			                                .correlationId(corrId)
+			                                .correlationId(CorrId)
 			                                .replyTo(replyQueueName)
 			                                .build();
 			    channel.basicPublish("", requestQueueName, props, _message.toBytes());
-			
-			    while (true) 
-			    {
-			        QueueingConsumer.Delivery delivery = consumer.nextDelivery(100000);
+			    System.out.println("Sent new request for "+_message.GetTicker()+" : "+_message.GetCorrelationId());
+			    ListenForResponse();
+			    
+		//	    while (true) 
+		//	    {
+			 //       QueueingConsumer.Delivery delivery = consumer.nextDelivery(100000);
 			      
-			        if (delivery.getProperties().getCorrelationId().equals(corrId)) 
-			        	{
-			        	 System.out.println("Correlaation id match : "+corrId);
-			        	return fromBytes( delivery.getBody());
+			  //      if (delivery.getProperties().getCorrelationId().equals(corrId)) 
+			   //     	{
+			    //    	 System.out.println("Correlaation id match : "+corrId);
+			     //   	return fromBytes( delivery.getBody());
 			        	
-			        	}
-			        else
-			        {
-			        	System.out.println(delivery.getProperties().getCorrelationId()+" not for me");
-			        }
+			     //   	}
+			      //  else
+			       // {
+			       // 	System.out.println(delivery.getProperties().getCorrelationId()+" not for me");
+		//	       }
+			    
+			while(!MDRC.HasResponded(CorrId))
+			{
+				Thread.sleep(300);
+				
+			}
+			
+			return MDRC.GetResponse(CorrId);
+			    
 			        
-			    }
+			   
 		 }
 		 catch (Exception e)
 		 {
@@ -101,6 +181,14 @@ public class MarketDataRequester {
 		
 		
 	 }
+
+private void SendRequest(String CorrId)
+{
+	
+	
+}
+	
+
 		
 	 public NewMarketDataRequest WaitForData(String Correlation_Id)
 	 {
