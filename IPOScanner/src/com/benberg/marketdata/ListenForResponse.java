@@ -12,7 +12,7 @@ import java.util.UUID;
 public class ListenForResponse extends Thread{
 
 	
-	public String SendNewMarketDataRequest(String Ticker,String TimeFrame)
+	public String SendNewMarketDataRequest(String Ticker,String TimeFrame,boolean RealTime)
 	{
 		 try {
 				
@@ -21,7 +21,7 @@ public class ListenForResponse extends Thread{
 		  MarketDataRequester MDR = new MarketDataRequester();
 		  MDR = MarketDataRequester.getInstance();
 	
-		  NewMarketDataRequest _message = MDR.SendMarketDataRequest(new NewMarketDataRequest(Ticker, CorrelationId,TimeFrame));
+		  NewMarketDataRequest _message = MDR.SendMarketDataRequest(new NewMarketDataRequest(RealTime,Ticker, CorrelationId,TimeFrame));
 	  
 		 
     	  System.out.println("Ticker : "+_message.GetTicker());

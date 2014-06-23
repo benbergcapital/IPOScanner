@@ -11,14 +11,20 @@ public class NewMarketDataRequest implements Serializable{
 	private String CorrelationId;
 	private String MarketDataJson;
 	private String TimeFrame;
+	private boolean RealTime;
 	private static final long serialVersionUID = 1L;
-	public NewMarketDataRequest(String Ticker,String CorrId, String TimeFrame)
+	public NewMarketDataRequest(boolean Realtime,String Ticker,String CorrId, String TimeFrame)
 	{
+		this.RealTime = Realtime;
 		this.Ticker = Ticker;
 		this.CorrelationId = CorrId;
 		this.TimeFrame = TimeFrame;
 	}
 	
+	public boolean IsRealTime()
+	{
+		return RealTime;
+	}
 	public String GetTicker()
 	{
 		return Ticker;

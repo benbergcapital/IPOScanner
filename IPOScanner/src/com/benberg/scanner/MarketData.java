@@ -20,10 +20,16 @@ public class MarketData extends HttpServlet{
 
 		  String Ticker = request.getParameter("Ticker");
 		  String TimeFrame = request.getParameter("Timeframe");
+		  String RealTime = request.getParameter("RealTime");
+		  boolean _RealTime;
+		if(RealTime.equals("True"))
+				 _RealTime = true;
+		  else
+			  	_RealTime = false;
 		  PrintWriter out = response.getWriter();
 		  
 		 ListenForResponse L = new ListenForResponse();
-		 String result= L.SendNewMarketDataRequest(Ticker,TimeFrame);
+		 String result= L.SendNewMarketDataRequest(Ticker,TimeFrame,_RealTime);
 				  
 		
 		 
