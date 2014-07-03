@@ -13,23 +13,56 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.benberg.marketdata.ListenForResponse;
 import com.benberg.marketdata.MarketDataRequester;
+import com.benberg.struct.RequestType;
+
 @WebServlet("/MarketDataRequest")
 public class MarketData extends HttpServlet{
 	
 	  public void doPost(HttpServletRequest request,HttpServletResponse response)throws IOException, ServletException{
 
 		  String Ticker = request.getParameter("Ticker");
-		  String TimeFrame = request.getParameter("Timeframe");
+		  String Req = request.getParameter("RequestType");
+		  
+		
+		  RequestType enumval = RequestType.valueOf(Req);
+		  PrintWriter out = response.getWriter();
+    	  ListenForResponse L = new ListenForResponse();
+    	  String result=null;
+		  switch (enumval) {
+		     case AUTOTRADER: 
+		    	 result= L.SendNewMarketDataRequest(Ticker,null,false,0, enumval);
+		    	 out.println(result);
+		    	 break;
+		     case REALTIMEREQUEST: 
+		    	 String TimeFrame = request.getParameter("Timeframe");
+		    	  boolean _RealTime = true;;
+		    	  long _LastTime =Long.parseLong(request.getParameter("LastTime"));
+		    	  result= L.SendNewMarketDataRequest(Ticker,TimeFrame,_RealTime,_LastTime, enumval);
+		    	  out.println(result);
+		    	 break;
+		     case HISTORICALREQUEST: 
+		    //	 String TimeFrame = request.getParameter("Timeframe");
+			//	  String RealTime = request.getParameter("RealTime");
+		    	 break;
+
+		  }
+		
+		  
+	/*	  String TimeFrame = request.getParameter("Timeframe");
 		  String RealTime = request.getParameter("RealTime");
+		  long _LastTime = 0;
 		  boolean _RealTime;
 		if(RealTime.equals("True"))
+		{
 				 _RealTime = true;
+		  _LastTime =Long.parseLong(request.getParameter("LastTime"));
+		}
 		  else
 			  	_RealTime = false;
 		  PrintWriter out = response.getWriter();
 		  
 		 ListenForResponse L = new ListenForResponse();
-		 String result= L.SendNewMarketDataRequest(Ticker,TimeFrame,_RealTime);
+		 String result= L.SendNewMarketDataRequest(Ticker,TimeFrame,_RealTime,_LastTime);
 				  
 		
 		 
@@ -37,7 +70,7 @@ public class MarketData extends HttpServlet{
 		 
 		 
 		  out.println(result);
-	  
+	  */
 }
 	
 	

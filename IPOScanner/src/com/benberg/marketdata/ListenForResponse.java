@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 
 import com.benberg.struct.NewMarketDataRequest;
+import com.benberg.struct.RequestType;
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.QueueingConsumer;
 import java.util.UUID;
@@ -12,7 +13,7 @@ import java.util.UUID;
 public class ListenForResponse extends Thread{
 
 	
-	public String SendNewMarketDataRequest(String Ticker,String TimeFrame,boolean RealTime)
+	public String SendNewMarketDataRequest(String Ticker,String TimeFrame,boolean RealTime,long LastTime,RequestType req)
 	{
 		 try {
 				
@@ -21,7 +22,7 @@ public class ListenForResponse extends Thread{
 		  MarketDataRequester MDR = new MarketDataRequester();
 		  MDR = MarketDataRequester.getInstance();
 	
-		  NewMarketDataRequest _message = MDR.SendMarketDataRequest(new NewMarketDataRequest(RealTime,Ticker, CorrelationId,TimeFrame));
+		  NewMarketDataRequest _message = MDR.SendMarketDataRequest(new NewMarketDataRequest(RealTime,Ticker, CorrelationId,TimeFrame,req));
 	  
 		 
     	  System.out.println("Ticker : "+_message.GetTicker());
@@ -43,6 +44,11 @@ public class ListenForResponse extends Thread{
 		
 		    
 		
+	}
+
+	public String SendNewAutoTraderMarketDataRequest(String ticker) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	
