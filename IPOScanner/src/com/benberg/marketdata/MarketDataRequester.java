@@ -147,21 +147,7 @@ public class MarketDataRequester {
 			    System.out.println("Sent new request for "+_message.GetTicker()+" : "+_message.GetCorrelationId());
 			    ListenForResponse();
 			    
-		//	    while (true) 
-		//	    {
-			 //       QueueingConsumer.Delivery delivery = consumer.nextDelivery(100000);
-			      
-			  //      if (delivery.getProperties().getCorrelationId().equals(corrId)) 
-			   //     	{
-			    //    	 System.out.println("Correlaation id match : "+corrId);
-			     //   	return fromBytes( delivery.getBody());
-			        	
-			     //   	}
-			      //  else
-			       // {
-			       // 	System.out.println(delivery.getProperties().getCorrelationId()+" not for me");
-		//	       }
-			    
+	
 			while(!MDRC.HasResponded(CorrId))
 			{
 				Thread.sleep(300);

@@ -15,7 +15,7 @@ public class NewMarketDataRequest implements Serializable{
 	private static final long serialVersionUID = 1L;
 	public static int MARKETDATA = 1;
 	public  static int RSIDATA = 2;
-	private static RequestType Type;		
+	private RequestType Type;		
 	//public static final int HISTORICAL = 1;
 //	public static final int LIVE = 2;
 //	private int type;
@@ -44,6 +44,10 @@ public class NewMarketDataRequest implements Serializable{
 		this.Ticker = Ticker;
 		this.CorrelationId = CorrId;
 		this.MarketDataJson=MarketData;
+	}
+	public NewMarketDataRequest(String ticker, RequestType enumval) {
+		this.Type = enumval;
+		this.Ticker=ticker;
 	}
 	public String GetTicker()
 	{

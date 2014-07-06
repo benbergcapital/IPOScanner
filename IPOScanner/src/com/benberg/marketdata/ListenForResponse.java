@@ -21,8 +21,8 @@ public class ListenForResponse extends Thread{
 					
 		  MarketDataRequester MDR = new MarketDataRequester();
 		  MDR = MarketDataRequester.getInstance();
-	
-		  NewMarketDataRequest _message = MDR.SendMarketDataRequest(new NewMarketDataRequest(RealTime,Ticker, CorrelationId,TimeFrame,req));
+		  NewMarketDataRequest _recv =   new NewMarketDataRequest(RealTime,Ticker, CorrelationId,TimeFrame,req);
+		  NewMarketDataRequest _message = MDR.SendMarketDataRequest(_recv);
 	  
 		 
     	  System.out.println("Ticker : "+_message.GetTicker());
@@ -51,7 +51,24 @@ public class ListenForResponse extends Thread{
 		return null;
 	}
 
-	
+	public String SendNewAutoTraderWebRequest(String ticker, RequestType enumval) {
+		// TODO Auto-generated method stub
+		  String CorrelationId= UUID.randomUUID().toString();
+			
+		  MarketDataRequester MDR = new MarketDataRequester();
+		  MDR = MarketDataRequester.getInstance();
+
+		  NewMarketDataRequest _message = MDR.SendMarketDataRequest(new NewMarketDataRequest(ticker,enumval));
+		
+		  System.out.println("Ticker : "+_message.GetTicker());
+    	  System.out.println("Data : "+_message.GetMarketDataJson());
+		
+    	  //to xml
+    	  
+    	  
+		
+		return null;
+	}
 
 	
 	

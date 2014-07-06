@@ -37,11 +37,11 @@
  <script>
  function GetData()
  {
-	
+	var Ticker = "AAPL";
 
-	     	var dataString ={"Ticker":"AAPL","RequestType":"AUTOTRAD"};
+	     	var dataString ={"Ticker":Ticker,"RequestType":"AUTOTRADER"};
 	     	
-	     	$('#'+chart).html("Loading...");
+	     	$('#chart1').html("Loading...");
 	    // 	var high =0;
 	 	//	var low=9999;
 	 		
@@ -51,7 +51,11 @@
 	     	    data: dataString,
 	     	    success: function(jsonData) {
 	     	    	
+	     //	    	alert("{"+jsonData+"}");
 	     	    	
+	  if (jsonData.indexOf("NoRSIData") ==-1)
+	     	{    		
+	     	    	alert("here");
 	     	    	var data = JSON.parse("["+jsonData+"]");
 
 	 	
@@ -70,10 +74,7 @@
 	 			data[i][4] // close
 	 			
 	 		]);
-	 		if (data[i][2] > high)
-	 			high = data[i][2];
-	 		if (data[i][3]< low)
-	 			low = data[i][3];
+	 	
 
 	 	}
 
@@ -176,10 +177,11 @@
 
 	 	
 	     	    }
+	  else
+		  $('#chart1').html("RSI calculation failed for "+Ticker);
 	     	    
 	     	    
-	     	    
-	     	    
+	     	    }
 	     	    
 	     	});
 	     	
@@ -231,7 +233,7 @@
  </div>
 <div class="main" id="right">
 
-
+<button onclick="GetData()">New</button>
 <div id="chart1" ></div>
 
 </div>
