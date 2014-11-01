@@ -24,26 +24,38 @@ public class MarketData extends HttpServlet{
 		  String Req = request.getParameter("RequestType");
 		  
 		
-		  RequestType enumval = RequestType.valueOf(Req);
+		  RequestType requestType = Req==null ? null: RequestType.valueOf(Req);
+		  
 		  PrintWriter out = response.getWriter();
     	  ListenForResponse L = new ListenForResponse();
-    	  String result=null;
-		  switch (enumval) {
+    	  String result;
+    	  String TimeFrame;
+    	  boolean RealTime=false;
+    	  long LastTime;
+    	  
+		  switch (requestType) {
 		     case AUTOTRADER: 
-		    	 result= L.SendNewMarketDataRequest(Ticker,null,false,0, enumval);
-		    	 out.println(result);
-		    	 break;
+		    	 	result= L.SendNewMarketDataRequest(Ticker,null,false,0, requestType);
+	    	 		out.println(result);
+		    	 	break;
 		     case REALTIMEREQUEST: 
-		    	 String TimeFrame = request.getParameter("Timeframe");
-		    	  boolean _RealTime = true;;
-		    	  long _LastTime =Long.parseLong(request.getParameter("LastTime"));
-		    	  result= L.SendNewMarketDataRequest(Ticker,TimeFrame,_RealTime,_LastTime, enumval);
-		    	  out.println(result);
+		    	 	TimeFrame = request.getParameter("Timeframe");
+		    	 	RealTime = true;;
+		    	 	LastTime =Long.parseLong(request.getParameter("LastTime"));
+		    	 	result= L.SendNewMarketDataRequest(Ticker,TimeFrame,RealTime,LastTime, requestType);
+		    	 	out.println(result);
 		    	 break;
-		     case HISTORICALREQUEST: 
+		     case DAY: 
+		    	 //	LastTime =Long.parseLong(request.getParameter("LastTime"));
+		    	 	result= L.SendNewMarketDataRequest(Ticker,requestType);
+		    	 	out.println(result);
+		    	 break;
+		    	 
+		    	 
+		    	 
 		    //	 String TimeFrame = request.getParameter("Timeframe");
 			//	  String RealTime = request.getParameter("RealTime");
-		    	 break;
+		    	
 
 		  }
 		

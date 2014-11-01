@@ -42,10 +42,42 @@ public class ListenForResponse extends Thread{
 		    	 return "NoData";	
 		    }
 		
-		    
-		
 	}
 
+
+	public String SendNewMarketDataRequest(String Ticker,RequestType req)
+	{
+		 try {
+				
+		  String CorrelationId= UUID.randomUUID().toString();
+					
+		  MarketDataRequester MDR = new MarketDataRequester();
+		  MDR = MarketDataRequester.getInstance();
+		  NewMarketDataRequest _send =   new NewMarketDataRequest(Ticker,CorrelationId,req);
+		  NewMarketDataRequest _recv = MDR.SendMarketDataRequest(_send);
+	  
+		 
+    	  System.out.println("Ticker : "+_recv.GetTicker());
+    	  System.out.println("Data : "+_recv.GetMarketDataJson());
+		 
+    	
+    		  return _recv.GetMarketDataJson();
+    
+    		 
+		
+		   
+		    } 
+		   
+		    catch (Exception e) {
+		    	System.out.println(e.toString());
+		    	
+		    	 return "NoData";	
+		    }
+		
+	}
+	
+	
+	
 	public String SendNewAutoTraderMarketDataRequest(String ticker) {
 		// TODO Auto-generated method stub
 		return null;

@@ -4,6 +4,7 @@ public enum RequestType {
 	AUTOTRADER,
 	REALTIMEREQUEST,
 	HISTORICALREQUEST,
+	DAY,
 	PNL,
 	ORDERS,
 	RSI

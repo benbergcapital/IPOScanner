@@ -44,7 +44,7 @@ public class MarketDataRequester {
 		 factory = new ConnectionFactory();
 		    factory.setHost("localhost");
 		    factory.setUsername("Admin"); 
-			factory.setPassword("Typhoon1"); 
+			factory.setPassword("Admin"); 
 		    
 		    connection = factory.newConnection();
 		    channel = connection.createChannel();
