@@ -21,19 +21,9 @@ public class ListenForResponse extends Thread{
 					
 		  MarketDataRequester MDR = new MarketDataRequester();
 		  MDR = MarketDataRequester.getInstance();
-		  NewMarketDataRequest _recv =   new NewMarketDataRequest(RealTime,Ticker, CorrelationId,TimeFrame,req);
-		  NewMarketDataRequest _message = MDR.SendMarketDataRequest(_recv);
-	  
-		 
-    	  System.out.println("Ticker : "+_message.GetTicker());
-    	  System.out.println("Data : "+_message.GetMessage());
-		 
-    	
-    		  return _message.GetMessage();
-    
-    		 
-		
-		   
+		  NewMarketDataRequest send =   new NewMarketDataRequest(RealTime,Ticker, CorrelationId,TimeFrame,req);
+		  return MDR.SendMarketDataRequest(send);
+	  	 
 		    } 
 		   
 		    catch (Exception e) {
@@ -54,17 +44,10 @@ public class ListenForResponse extends Thread{
 		  MarketDataRequester MDR = new MarketDataRequester();
 		  MDR = MarketDataRequester.getInstance();
 		  NewMarketDataRequest _send =   new NewMarketDataRequest(Ticker,CorrelationId,req);
-		  NewMarketDataRequest _recv = MDR.SendMarketDataRequest(_send);
+		  
+		  return MDR.SendMarketDataRequest(_send);
 	  
-		 
-    	  System.out.println("Ticker : "+_recv.GetTicker());
-    	  System.out.println("Data : "+_recv.GetMessage());
-		 
-    	
-    		  return _recv.GetMessage();
-    
-    		 
-		
+		 	
 		   
 		    } 
 		   

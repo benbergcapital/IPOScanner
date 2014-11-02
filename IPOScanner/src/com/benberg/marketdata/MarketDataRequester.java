@@ -9,6 +9,7 @@ import java.util.Map;
 
 import com.benberg.scanner.MarketDataRequestCache;
 import com.benberg.struct.NewMarketDataRequest;
+import com.benberg.struct.RequestType;
 import com.rabbitmq.client.AMQP.BasicProperties;
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Connection;
@@ -129,7 +130,7 @@ public class MarketDataRequester {
 			  
 	}
 
-	public NewMarketDataRequest SendMarketDataRequest(NewMarketDataRequest _message)
+	public String SendMarketDataRequest(NewMarketDataRequest _message)
 	 {
 		 try{
 
@@ -153,10 +154,16 @@ public class MarketDataRequester {
 				Thread.sleep(100);
 				timeout++;
 			}
+			if (timeout>29)
+				return " Error : No response from trading was received within the timeout period.";
 			
-			return MDRC.GetResponse(CorrId);
-			    
-			        
+			NewMarketDataRequest recv = MDRC.GetResponse(CorrId);
+			System.out.println("Ticker : "+recv.GetTicker());
+	    	System.out.println("Data : "+recv.GetMessage());
+	    	    	
+				
+			return recv.GetMessage();
+						        
 			   
 		 }
 		 catch (Exception e)

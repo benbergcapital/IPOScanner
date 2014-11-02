@@ -28,8 +28,11 @@ GlobalTicker=Ticker;
     	    data: dataString,
     	    success: function(quote) {
     	    //	alert(quote);
-    	    	$('#quote').html(quote); 	
-    	    if(quote.indexOf("-")>-1)//Stock is down
+    	    	$('#quote').html(quote); 
+    	    	
+    	    if(quote.indexOf("Error")>-1)
+    	    	return;
+    	    else if(quote.indexOf("-")>-1)//Stock is down
     	    	$('#quote').css('color', 'red');
     	    else
     	    	$('#quote').css('color', 'green');
@@ -55,7 +58,13 @@ GlobalTicker=Ticker;
     	    url: "MarketDataRequest.do",
     	    data: dataString,
     	    success: function(jsonData) {
-    	    	
+    	    
+    	 if(jsonData.indexOf("Error")>-1)
+    	 {
+    		$('#chart').html("");
+    		return;
+    	 }
+        	    	
     	    	
     	  var data = JSON.parse("["+jsonData+"]");
 
@@ -153,14 +162,14 @@ function ReloadChart(ticker)
 <style>
 #section {
    padding:5px;
-   width:1334px;
+   width:832px;
 }
 #left{
-	width:166px;
+	width:120px;
 	vertical-align: text-top;
 }
 #chart{
-	width: 1168px;
+	width: 712px;
 }
 #quote{
 	padding-left: 15px;
