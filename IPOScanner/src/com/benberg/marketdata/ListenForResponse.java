@@ -26,10 +26,10 @@ public class ListenForResponse extends Thread{
 	  
 		 
     	  System.out.println("Ticker : "+_message.GetTicker());
-    	  System.out.println("Data : "+_message.GetMarketDataJson());
+    	  System.out.println("Data : "+_message.GetMessage());
 		 
     	
-    		  return _message.GetMarketDataJson();
+    		  return _message.GetMessage();
     
     		 
 		
@@ -58,10 +58,10 @@ public class ListenForResponse extends Thread{
 	  
 		 
     	  System.out.println("Ticker : "+_recv.GetTicker());
-    	  System.out.println("Data : "+_recv.GetMarketDataJson());
+    	  System.out.println("Data : "+_recv.GetMessage());
 		 
     	
-    		  return _recv.GetMarketDataJson();
+    		  return _recv.GetMessage();
     
     		 
 		
@@ -85,6 +85,7 @@ public class ListenForResponse extends Thread{
 
 	public String SendNewAutoTraderWebRequest(String ticker, RequestType enumval) {
 		// TODO Auto-generated method stub
+		/*
 		  String CorrelationId= UUID.randomUUID().toString();
 			
 		  MarketDataRequester MDR = new MarketDataRequester();
@@ -98,8 +99,9 @@ public class ListenForResponse extends Thread{
     	  //to xml
     	  
     	  
-		
+		*/
 		return null;
+		
 	}
 
 	

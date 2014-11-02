@@ -135,7 +135,7 @@ public class MarketDataRequester {
 
 			 String CorrId = _message.GetCorrelationId();
 
-			 SendRequest(CorrId);
+			
 			 
 			 
 			    BasicProperties props = new BasicProperties
@@ -147,11 +147,11 @@ public class MarketDataRequester {
 			    System.out.println("Sent new request for "+_message.GetTicker()+" : "+_message.GetCorrelationId());
 			    ListenForResponse();
 			    
-	
-			while(!MDRC.HasResponded(CorrId))
+			int timeout =0;
+			while(!MDRC.HasResponded(CorrId) && timeout < 30)
 			{
-				Thread.sleep(300);
-				
+				Thread.sleep(100);
+				timeout++;
 			}
 			
 			return MDRC.GetResponse(CorrId);

@@ -30,7 +30,7 @@ function GetData(Ticker,Timeframe,chart)
 	GlobalTicker=Ticker;
 	//var test = "[1182124800000,17.61,17.88,17.51,17.87,227971779],[1182211200000,17.81,17.86,17.56,17.67,236173490],[1182297600000,17.70,17.81,17.36,17.36,224570395]";
 	
-	    	var dataString ={"Ticker":Ticker,"Timeframe":Timeframe,"RealTime":"false", "RequestType":"Day"};
+	    	var dataString ={"Ticker":Ticker,"Timeframe":Timeframe,"RealTime":"false", "RequestType":"DAY"};
 	        var max = 0;
 	    	$('#'+chart).html("Loading...");
 	    	

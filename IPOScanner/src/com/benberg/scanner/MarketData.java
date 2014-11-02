@@ -45,12 +45,16 @@ public class MarketData extends HttpServlet{
 		    	 	result= L.SendNewMarketDataRequest(Ticker,TimeFrame,RealTime,LastTime, requestType);
 		    	 	out.println(result);
 		    	 break;
-		     case DAY: 
+		     case CHART_DAY: 
 		    	 //	LastTime =Long.parseLong(request.getParameter("LastTime"));
 		    	 	result= L.SendNewMarketDataRequest(Ticker,requestType);
 		    	 	out.println(result);
 		    	 break;
-		    	 
+		     case QUOTE: 
+		    	 //	LastTime =Long.parseLong(request.getParameter("LastTime"));
+		    	 	result= L.SendNewMarketDataRequest(Ticker,requestType);
+		    	 	out.println(result);
+		    	 break;	 
 		    	 
 		    	 
 		    //	 String TimeFrame = request.getParameter("Timeframe");
