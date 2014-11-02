@@ -12,6 +12,13 @@
 
 <script>
 var chart;
+var GlobalTicker;
+window.onload = onLoad;
+function onLoad()
+{
+document.getElementById('id_duration').style.visibility="hidden";
+}
+
 
 function GetQuote(Ticker,RequestType)
 {
@@ -37,7 +44,7 @@ GlobalTicker=Ticker;
     	    else
     	    	$('#quote').css('color', 'green');
     	    	
-    	    	
+    	    document.getElementById('id_duration').style.visibility="visible";	
     	    }});
 }
     	    	
@@ -143,21 +150,38 @@ GlobalTicker=Ticker;
 }
 function NewChartRequest()
 {
-	$('#quote').html(""); 	
-	$('#chart').html(""); 
+	ResetPage();
 	var ticker = document.getElementById('id_ticker').value;
-	GetData(ticker,"CHART_DAY");  
-	GetQuote(ticker,"QUOTE");
+	ReloadChart(ticker);
+
 }
 function ReloadChart(ticker)
 {
-	  $('#quote').html(""); 	
-	  $('#chart').html(""); 
+	  ResetPage();
 	  GetData(ticker,"CHART_DAY");  
 	  GetQuote(ticker,"QUOTE");
-  
-}
+ }
+function ResetPage()
+{
+	  $('#quote').html(""); 	
+	  $('#chart').html(""); 	
+	  document.getElementById('id_duration').style.visibility="hidden";		
 	
+}
+function ChangeDuration()
+{
+
+	GetData(GlobalTicker,"CHART_2_DAY");  
+	
+	
+}
+
+$(document).ready(function(){
+    $('#id_ticker').keypress(function(e){
+      if(e.keyCode==13)
+      $('#id_ticker_go').click();
+    });
+});	
 </script>
 <style>
 #section {
@@ -168,12 +192,22 @@ function ReloadChart(ticker)
 	width:120px;
 	vertical-align: text-top;
 }
+#right{
+	vertical-align: text-top;
+}
 #chart{
 	width: 712px;
 }
 #quote{
 	padding-left: 15px;
 	text-align:left;
+}
+#Duration{
+	text-align:right;
+
+}
+#quotetable{
+	width:712px;
 }
 </style>
 
@@ -191,7 +225,7 @@ function ReloadChart(ticker)
 <input type="text" id="id_ticker" name="ticker">
 </td>
 <td>
-<button onclick="NewChartRequest()">Go</button>
+<button id="id_ticker_go" onclick="NewChartRequest()">Go</button>
 </td>
 </tr>
 </table>
@@ -202,8 +236,18 @@ function ReloadChart(ticker)
 <button onclick="myFunction()">EBAY</button>
 </td>
 
+<td id="right">
+<table id="quotetable">
+<tr>
 <td>
 <div id="quote"></div>
+</td>
+<td>
+<div id="Duration"><button id="id_duration" onclick="ChangeDuration()">Duration</button></div>
+</td>
+</tr>
+</table>
+
 <div id="chart"></div>
 
 

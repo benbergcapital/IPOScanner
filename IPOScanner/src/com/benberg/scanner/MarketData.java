@@ -55,7 +55,11 @@ public class MarketData extends HttpServlet{
 		    	 	result= L.SendNewMarketDataRequest(Ticker,requestType);
 		    	 	out.println(result);
 		    	 break;	 
-		    	 
+		    	
+	    	 default:
+	    	   	 	result= L.SendNewMarketDataRequest(Ticker,requestType);
+		    	 	out.println(result);
+		    	 break;
 		    	 
 		    //	 String TimeFrame = request.getParameter("Timeframe");
 			//	  String RealTime = request.getParameter("RealTime");
