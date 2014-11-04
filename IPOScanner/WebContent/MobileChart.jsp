@@ -17,11 +17,15 @@ window.onload = onLoad;
 function onLoad()
 {
 document.getElementById('id_duration').style.visibility="hidden";
+setInterval(function(){GetQuote (GlobalTicker,"QUOTE")}, 3000);
 }
 
 
 function GetQuote(Ticker,RequestType)
 {
+	if (Ticker==null)
+		return;
+	
 GlobalTicker=Ticker;
 
 //var test = "[1182124800000,17.61,17.88,17.51,17.87,227971779],[1182211200000,17.81,17.86,17.56,17.67,236173490],[1182297600000,17.70,17.81,17.36,17.36,224570395]";
@@ -47,7 +51,7 @@ GlobalTicker=Ticker;
     	    document.getElementById('id_duration').style.visibility="visible";	
     	    }});
 }
-    	    	
+
 function GetData(Ticker,RequestType)
 {
 GlobalTicker=Ticker;
