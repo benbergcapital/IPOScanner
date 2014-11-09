@@ -416,10 +416,7 @@ tr:first-child td { white-space: nowrap }
 <div id="wrapper">
 
 <div class="metro place-left" id="menu">
-
- 
    
-     
      <nav class="sidebar light">
        <ul>
             <li class=""><a href="IpoTracker.jsp"><i class="icon-home"></i>IPO Tracker</a></li>
@@ -428,8 +425,6 @@ tr:first-child td { white-space: nowrap }
 	   </ul>
      </nav>
 	
-	
-
  </div>
 <div id="content" >
 

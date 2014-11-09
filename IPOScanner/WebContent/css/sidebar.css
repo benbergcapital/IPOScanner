@@ -1,0 +1,13 @@
+#wrapper {
+    width: 100%;
+    height:100%;
+}
+#left {
+    width: 150px;
+    
+    float:left; /* add this */
+   
+}
+#right {
+  margin-left: 160px;
+}

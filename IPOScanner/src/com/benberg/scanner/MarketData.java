@@ -25,7 +25,7 @@ public class MarketData extends HttpServlet{
 		  
 		
 		  RequestType requestType = Req==null ? null: RequestType.valueOf(Req);
-		  
+		 
 		  PrintWriter out = response.getWriter();
     	  ListenForResponse L = new ListenForResponse();
     	  String result;
@@ -52,11 +52,11 @@ public class MarketData extends HttpServlet{
 		    	 break;
 		     case QUOTE: 
 		    	 //	LastTime =Long.parseLong(request.getParameter("LastTime"));
+		    	 	
 		    	 	result= L.SendNewMarketDataRequest(Ticker,requestType);
 		    	 	out.println(result);
 		    	 break;	 
-		    	
-	    	 default:
+		     default:
 	    	   	 	result= L.SendNewMarketDataRequest(Ticker,requestType);
 		    	 	out.println(result);
 		    	 break;

@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.benberg.scanner.Cache;
 import com.benberg.scanner.MarketDataRequestCache;
 import com.benberg.struct.NewMarketDataRequest;
 import com.benberg.struct.RequestType;
@@ -149,19 +150,20 @@ public class MarketDataRequester {
 			    ListenForResponse();
 			    
 			int timeout =0;
-			while(!MDRC.HasResponded(CorrId) && timeout < 30)
+			while(!MDRC.HasResponded(CorrId) && timeout < 50)
 			{
 				Thread.sleep(100);
 				timeout++;
 			}
-			if (timeout>29)
+			if (timeout==50)
 				return " Error : No response from trading was received within the timeout period.";
 			
 			NewMarketDataRequest recv = MDRC.GetResponse(CorrId);
 			System.out.println("Ticker : "+recv.GetTicker());
 	    	System.out.println("Data : "+recv.GetMessage());
 	    	    	
-				
+			//add ticker to map
+	    	Cache.getInstance().addTickerToMobileFrequentList(recv.GetTicker());
 			return recv.GetMessage();
 						        
 			   

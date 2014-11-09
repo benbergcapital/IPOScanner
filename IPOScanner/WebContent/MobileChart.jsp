@@ -1,3 +1,5 @@
+<%@page import="java.util.List"%>
+<%@page import="com.benberg.scanner.Cache"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -16,12 +18,14 @@ var GlobalTicker;
 window.onload = onLoad;
 function onLoad()
 {
-document.getElementById('id_duration').style.visibility="hidden";
-setInterval(function(){GetQuote (GlobalTicker,"QUOTE")}, 3000);
+//	document.getElementById('id_duration_daily').style.visibility="hidden";		
+//	document.getElementById('id_duration_2day').style.visibility="hidden";		
+	document.getElementById('buttons').style.visibility="hidden";	
+	setInterval(function(){GetQuote (GlobalTicker,"QUOTE",true)}, 3000);
 }
 
 
-function GetQuote(Ticker,RequestType)
+function GetQuote(Ticker,RequestType,Refresh)
 {
 	if (Ticker==null)
 		return;
@@ -39,16 +43,31 @@ GlobalTicker=Ticker;
     	    data: dataString,
     	    success: function(quote) {
     	    //	alert(quote);
-    	    	$('#quote').html(quote); 
+    	    
+    	  
+    	   
+    	    //if refreshing the quote, we dont want to remove the last quote if there was no data returned this time..
+    	    //Instead make the quote grey.
+    	    
     	    	
-    	    if(quote.indexOf("Error")>-1)
+    	    
+    	    	
+    	   if(quote.indexOf("Error")>-1)
+    	   	{
+    	    	  if (Refresh==true)
+    	    		  $('#quote').css('color', 'grey');	
     	    	return;
-    	    else if(quote.indexOf("-")>-1)//Stock is down
+    	   	}
+    	    
+    	   $('#quote').html(quote); 
+    	   if(quote.indexOf("-")>-1)//Stock is down
     	    	$('#quote').css('color', 'red');
-    	    else
+    	   else
     	    	$('#quote').css('color', 'green');
-    	    	
-    	    document.getElementById('id_duration').style.visibility="visible";	
+    	    
+    	    
+    	    
+    	   document.getElementById('buttons').style.visibility="visible";			
     	    }});
 }
 
@@ -56,7 +75,7 @@ function GetData(Ticker,RequestType)
 {
 GlobalTicker=Ticker;
 
-//var test = "[1182124800000,17.61,17.88,17.51,17.87,227971779],[1182211200000,17.81,17.86,17.56,17.67,236173490],[1182297600000,17.70,17.81,17.36,17.36,224570395]";
+
 
     	var dataString ={"Ticker":Ticker,"RequestType":RequestType};
         var max = 0;
@@ -95,11 +114,8 @@ GlobalTicker=Ticker;
 
     		}
     		LastTime = data[dataLength-1][0];
-    	//	alert(dataLength);
-    		// set the allowed units for data grouping
-    		  		
-    		
-    		//$('#chart').highcharts('StockChart', {
+    
+    	
 			 chart = new Highcharts.Chart({
 				 chart: {
 			            renderTo: 'chart',
@@ -162,22 +178,19 @@ function NewChartRequest()
 function ReloadChart(ticker)
 {
 	  ResetPage();
-	  GetData(ticker,"CHART_DAY");  
-	  GetQuote(ticker,"QUOTE");
+	  GetData(ticker,"CHART_1_MIN");  
+	  GetQuote(ticker,"QUOTE",false);
  }
 function ResetPage()
 {
 	  $('#quote').html(""); 	
 	  $('#chart').html(""); 	
-	  document.getElementById('id_duration').style.visibility="hidden";		
-	
+	  document.getElementById('buttons').style.visibility="hidden";			
 }
-function ChangeDuration()
+function ChangeDuration(duration)
 {
+	GetData(GlobalTicker,duration);  
 
-	GetData(GlobalTicker,"CHART_2_DAY");  
-	
-	
 }
 
 $(document).ready(function(){
@@ -206,12 +219,16 @@ $(document).ready(function(){
 	padding-left: 15px;
 	text-align:left;
 }
-#Duration{
+#duration{
 	text-align:right;
-
+	float: right;
 }
 #quotetable{
 	width:712px;
+}
+#button{
+	width: 100px;
+
 }
 </style>
 
@@ -233,11 +250,17 @@ $(document).ready(function(){
 </td>
 </tr>
 </table>
-
-<button onclick="ReloadChart('GPRO')">GPRO</button><br>
-<button onclick="ReloadChart('AAPL')">AAPL</button><br>
-<button onclick="ReloadChart('FSLR')">FSLR</button><br>
-<button onclick="myFunction()">EBAY</button>
+ <%  
+ 
+ 			  List<String> tickers = Cache.getInstance().getListOfFrequentTickers();
+              for (int i = 0; i < tickers.size(); i++) {  
+                 			
+                
+              out.println( "<button id=\"button\" onclick=\"ReloadChart('"+tickers.get(i)+ "')\">"+tickers.get(i)+"</button><br>" );  
+                              
+   
+              } 
+  %>  
 </td>
 
 <td id="right">
@@ -247,7 +270,11 @@ $(document).ready(function(){
 <div id="quote"></div>
 </td>
 <td>
-<div id="Duration"><button id="id_duration" onclick="ChangeDuration()">Duration</button></div>
+<div id="buttons">
+<div id="duration"><button id="id_duration_daily" onclick="ChangeDuration('CHART_DAILY')">Daily</button></div>
+<div id="duration"><button id="id_duration_2day" onclick="ChangeDuration('CHART_2_DAY_AO')">5 Min</button></div>
+<div id="duration"><button id="id_duration_2day" onclick="ChangeDuration('CHART_1_MIN')">1 Min</button></div>
+</div>
 </td>
 </tr>
 </table>

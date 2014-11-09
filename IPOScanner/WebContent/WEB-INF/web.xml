@@ -39,6 +39,17 @@
         <url-pattern>/MarketDataRequest.do</url-pattern>
     </servlet-mapping>
     
+      <servlet>
+     <servlet-name>NewsRequest</servlet-name>
+        <servlet-class>com.benberg.scanner.NewsScraper</servlet-class>
+    </servlet>
+     <servlet-mapping>
+        <servlet-name>NewsRequest</servlet-name>
+        <url-pattern>/NewsRequest.do</url-pattern>
+    </servlet-mapping>
+    
+    
+    
     <servlet>
         <servlet-name>SaveWatchlist</servlet-name>
         <servlet-class>com.benberg.scanner.SaveWatchlist</servlet-class>

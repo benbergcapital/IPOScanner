@@ -9,5 +9,8 @@ public enum RequestType {
 	ORDERS,
 	RSI,
 	QUOTE,
-	CHART_2_DAY
+	CHART_2_DAY_AO,
+	CHART_1_MIN,
+	CHART_DAILY,
+	CHART_5_DAY
 }

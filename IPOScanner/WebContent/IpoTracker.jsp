@@ -5,25 +5,19 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <meta name="product" content="Metro UI CSS Framework">
-    <meta name="description" content="Simple responsive css framework">
-    <meta name="author" content="Sergey S. Pimenov, Ukraine, Kiev">
 
     <link href="css/metro-bootstrap.css" rel="stylesheet">
     <link href="css/metro-bootstrap-responsive.css" rel="stylesheet">
     <link href="css/iconFont.css" rel="stylesheet">
     <link href="css/docs.css" rel="stylesheet">
     <link href="js/prettify/prettify.css" rel="stylesheet">
+    <link href="css/sidebar.css" rel="stylesheet">
 
  <!-- Tabbed content  -->
  	<script src="tabcontent.js" type="text/javascript"></script>
     <link href="tabcontent.css" rel="stylesheet" type="text/css" />
-
-
-    <!-- Load JavaScript Libraries -->
-       <script language="javascript" type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+  <!-- Load JavaScript Libraries -->
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
     <script src="js/jquery/jquery.min.js"></script>
     <script src="js/jquery/jquery.widget.min.js"></script>
     <script src="js/jquery/jquery.mousewheel.js"></script>
@@ -62,28 +56,8 @@
  
  
  </script>   
-    
-    
-    
-    
-    
-<style>
-#wrapper {
-    width: 100%;
-    height:100%;
-}
-#left {
-    width: 200px;
-    
-    float:left; /* add this */
-   
-}
-#right {
-  margin-left: 220px;
-}
-</style>
 
-    <title>Metro UI CSS : Metro Bootstrap CSS Library</title>
+    <title>IPO Scanner</title>
 </head>
 <body>
 <header class="bg-dark" data-load="header.html"></header>
@@ -94,7 +68,7 @@
        <ul>
             <li class="active"><a href="IpoTracker.jsp"><i class="icon-home"></i>IPO Tracker</a></li>
            <li class="stick bg-red"><a href="Watchlist.jsp"><i class="icon-cog"></i>Watchlist</a></li>
-          
+          <li class="stick bg-red"><a href="Scanner.jsp"><i class="icon-cog"></i>Scanner</a></li>
 	   </ul>
      </nav>
 	

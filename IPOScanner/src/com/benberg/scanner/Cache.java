@@ -1,5 +1,6 @@
 package com.benberg.scanner;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -12,7 +13,8 @@ public class Cache {
 	 private static Cache instance = null;
 	 private Map<Integer,List<String>> _ListOfAllTickers;
 	 private List<NasdaqIpoTickers> _ListOfUpcomingTickers;
-
+	 private List<String> _ListOfFrequentTickers = new ArrayList();
+	 
 	 private Watchlist _watchlist;
 	   protected Cache() {
 		   _ListOfAllTickers = new HashMap<Integer,List<String>>();
@@ -24,6 +26,33 @@ public class Cache {
 	      return instance;
 	   }
 	
+	   //**For Mobile Chart frequent ticker list
+	   public void addTickerToMobileFrequentList(String Ticker)
+	   {
+		   if (_ListOfFrequentTickers.contains(Ticker.toUpperCase()))
+		   		return;
+		   
+			   //Increment array values;
+			   for (int i=0;i<Math.min(_ListOfFrequentTickers.size(),10)-1;i++)
+			   {
+				   	_ListOfFrequentTickers.add(i+1, _ListOfFrequentTickers.get(i));
+	   			}
+			   _ListOfFrequentTickers.add(0, Ticker.toUpperCase()); 
+			
+				   
+	   }
+	   public List<String> getListOfFrequentTickers()
+	   {
+		return _ListOfFrequentTickers;
+				
+		   
+	   }
+	   
+	   
+	   
+	   //**
+	   
+	   
 	   public void setTickerList(Map<Integer,List<String>> Tickers)
 	   {
 		   instance._ListOfAllTickers = Tickers;
